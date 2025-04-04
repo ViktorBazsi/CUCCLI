@@ -34,7 +34,7 @@ export default function Header() {
             <Link to="/" className="hover:underline">
               Home
             </Link>
-            <Link to="/packages" className="hover:underline">
+            <Link to="/performance" className="hover:underline">
               Előadásod
             </Link>
             <Link to="/archive" className="hover:underline">
@@ -91,7 +91,7 @@ export default function Header() {
               Home
             </Link>
             <Link
-              to="/packages"
+              to="/performance"
               onClick={() => setMenuOpen(false)}
               className="hover:underline"
             >
