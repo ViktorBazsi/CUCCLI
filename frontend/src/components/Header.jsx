@@ -35,7 +35,7 @@ export default function Header() {
               Home
             </Link>
             <Link to="/packages" className="hover:underline">
-              Csomagok
+              Előadásod
             </Link>
             <Link to="/archive" className="hover:underline">
               Archív
@@ -95,7 +95,7 @@ export default function Header() {
               onClick={() => setMenuOpen(false)}
               className="hover:underline"
             >
-              Csomagok
+              Előadásod
             </Link>
             <Link
               to="/archive"

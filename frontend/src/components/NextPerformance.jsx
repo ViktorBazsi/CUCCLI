@@ -1,6 +1,6 @@
 export default function NextPerformance() {
   return (
-    <section className="w-full bg-white py-16 px-6 rounded-xl">
+    <section className="w-full bg-gradient-to-b from-gray-200 to-gray-400 py-16 px-6">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10">
         {/* Kép oldal */}
         <div className="w-full md:w-1/2">
@@ -14,12 +14,12 @@ export default function NextPerformance() {
         {/* Szöveg oldal */}
         <div className="w-full md:w-1/2 text-left">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            Következő előadás:{" "}
-            <span className="italic">„?”</span>
+            Következő előadás: <span className="italic">„Cucli XXV”</span>
           </h2>
           <p className="text-gray-700 mb-6">
             Egy egyedi, személyre szabott CUCLI előadás, ahol a néző történetei
-            kelnek életre. Ne maradj le!
+            kelnek életre. Ne maradj le! Sztárvendég:{" "}
+            <span className="italic">„Szikszai Rémusz”</span>
           </p>
           <p className="text-gray-500 text-sm mb-6">
             2025. április 12. — Apertúra Bázis
