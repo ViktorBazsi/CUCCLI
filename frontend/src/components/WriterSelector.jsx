@@ -69,6 +69,7 @@ export default function WriterSelector({
       <div className="flex flex-wrap justify-center gap-6">
         {writers.map((writer) => (
           <button
+            type="button"
             key={writer.id}
             onClick={() => handleOpenModal(writer)}
             className={`w-40 p-4 rounded-xl border text-center transition

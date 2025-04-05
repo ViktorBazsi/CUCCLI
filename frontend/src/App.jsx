@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 
 import LandingPage from "./pages/LandingPage";
 import PerformancePage from "./pages/PerformancePage";
+import CartPage from "./pages/CartPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/performance" element={<PerformancePage />} />
+        <Route path="/cart" element={<CartPage />} />
       </Routes>
       <Footer />
     </Router>

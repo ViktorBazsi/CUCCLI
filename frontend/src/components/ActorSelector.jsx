@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import PersonModal from "./PersonModal";
 
@@ -117,6 +116,7 @@ export default function ActorSelector({
       <div className="flex flex-wrap justify-center gap-4">
         {actors.map((actor, index) => (
           <button
+            type="button"
             key={index}
             onClick={() => handleOpenModal(actor)}
             className={`w-36 p-3 rounded-xl border text-center transition ${

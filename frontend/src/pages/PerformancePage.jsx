@@ -1,27 +1,60 @@
 import { Formik, Form } from "formik";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import WriterSelector from "../components/WriterSelector";
 import ActorSelector from "../components/ActorSelector";
 import DateSelector from "../components/DateSelector";
 
 export default function PerformancePage() {
-  const initialValues = {
-    topic: "",
-    writers: [],
-    actors: [],
-    recordingRequest: false,
-    date: "",
-  };
+  const navigate = useNavigate();
+  const [initialValues, setInitialValues] = useState(null); // fontos!
+
+  useEffect(() => {
+    const storedCart = localStorage.getItem("cucli_cart");
+    if (storedCart) {
+      try {
+        const parsed = JSON.parse(storedCart);
+        setInitialValues({
+          topic: parsed.topic || "",
+          writers: parsed.writers || [],
+          actors: parsed.actors || [],
+          recordingRequest: parsed.recordingRequest || false,
+          date: parsed.date || "",
+        });
+      } catch (err) {
+        console.error("Hibás kosárformátum a localStorage-ben.");
+        setInitialValues({
+          topic: "",
+          writers: [],
+          actors: [],
+          recordingRequest: false,
+          date: "",
+        });
+      }
+    } else {
+      setInitialValues({
+        topic: "",
+        writers: [],
+        actors: [],
+        recordingRequest: false,
+        date: "",
+      });
+    }
+  }, []);
 
   const handleSubmit = (values) => {
     console.log("Beküldött adatok:", values);
-    // fetch vagy axios POST kérés itt jöhet
-    // például:
-    // fetch("/api/performances", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(values),
-    // });
+    localStorage.setItem("cucli_cart", JSON.stringify(values));
+    navigate("/cart", { state: values });
   };
+
+  if (!initialValues) {
+    return (
+      <main className="pt-24 min-h-screen flex items-center justify-center">
+        <p className="text-gray-600">Betöltés...</p>
+      </main>
+    );
+  }
 
   return (
     <main className="pt-24 min-h-screen bg-gradient-to-b from-white to-gray-500 px-4">
@@ -30,9 +63,15 @@ export default function PerformancePage() {
           Állítsd össze az előadásod
         </h1>
 
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        <Formik
+          enableReinitialize
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+        >
           {({ values, setFieldValue }) => (
             <Form className="space-y-12">
+              {/* ... a többi rész változatlan marad */}
+
               {/* Téma input */}
               <div className="text-center">
                 <label
@@ -52,23 +91,23 @@ export default function PerformancePage() {
                 />
               </div>
 
-              {/* Írók választása */}
+              {/* Írók */}
               <WriterSelector
                 selectedWriters={values.writers}
-                setSelectedWriters={(newSelection) =>
-                  setFieldValue("writers", newSelection)
+                setSelectedWriters={(newWriters) =>
+                  setFieldValue("writers", newWriters)
                 }
               />
 
-              {/* Színészek választása */}
+              {/* Színészek */}
               <ActorSelector
                 selectedActors={values.actors}
-                setSelectedActors={(newSelection) =>
-                  setFieldValue("actors", newSelection)
+                setSelectedActors={(newActors) =>
+                  setFieldValue("actors", newActors)
                 }
               />
 
-              {/* Felvétel kérés gomb */}
+              {/* Felvétel kérés */}
               <div className="flex justify-center">
                 <button
                   type="button"
@@ -88,12 +127,13 @@ export default function PerformancePage() {
                 </button>
               </div>
 
+              {/* Dátum */}
               <DateSelector
                 selectedDate={values.date}
                 setSelectedDate={(date) => setFieldValue("date", date)}
               />
 
-              {/* Beküldés gomb */}
+              {/* Kosárba gomb */}
               <div className="text-center pt-6">
                 <button
                   type="submit"
