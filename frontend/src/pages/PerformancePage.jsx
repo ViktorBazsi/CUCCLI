@@ -22,7 +22,7 @@ export default function PerformancePage() {
           date: parsed.date || "",
         });
       } catch (err) {
-        console.error("Hibás kosárformátum a localStorage-ben.");
+        console.error("Hibás kosárformátum a localStorage-ben.", err);
         setInitialValues({
           topic: "",
           writers: [],

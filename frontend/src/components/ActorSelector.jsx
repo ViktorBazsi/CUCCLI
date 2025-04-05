@@ -4,7 +4,7 @@ import PersonModal from "./PersonModal";
 const actors = [
   {
     name: "Kiss Anna",
-    image: "https://via.placeholder.com/150",
+    image: "https://avatar.iran.liara.run/public/81",
     performances: ["Üvegtest", "Éjfél előtt"],
     works: ["Szereplés 'Árnyékok között'", "CUCLI: Átváltozások"],
     awards: ["Legjobb női főszereplő – 2023"],
@@ -12,7 +12,7 @@ const actors = [
   },
   {
     name: "Bálint Zoltán",
-    image: "https://via.placeholder.com/150",
+    image: "https://avatar.iran.liara.run/public/20",
     performances: ["Kék Csend", "Nézőpontok"],
     works: ["Kiemelkedő alakítás 'Ébredés'-ben"],
     awards: ["Színművészeti Különdíj"],
