@@ -1,13 +1,15 @@
 import { Formik, Form } from "formik";
 import WriterSelector from "../components/WriterSelector";
 import ActorSelector from "../components/ActorSelector";
+import DateSelector from "../components/DateSelector";
 
 export default function PerformancePage() {
   const initialValues = {
     topic: "",
     writers: [],
     actors: [],
-    recordingRequest: false, // ÚJ mező
+    recordingRequest: false,
+    date: "",
   };
 
   const handleSubmit = (values) => {
@@ -85,6 +87,11 @@ export default function PerformancePage() {
                     : "Felvételt kérek"}
                 </button>
               </div>
+
+              <DateSelector
+                selectedDate={values.date}
+                setSelectedDate={(date) => setFieldValue("date", date)}
+              />
 
               {/* Beküldés gomb */}
               <div className="text-center pt-6">
