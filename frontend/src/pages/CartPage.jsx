@@ -47,7 +47,7 @@ export default function CartPage() {
   };
 
   return (
-    <main className="pt-24 min-h-screen bg-gradient-to-b from-white to-gray-400 px-4 flex flex-col items-center">
+    <main className="pt-24 min-h-screen bg-gradient-to-b from-white to-gray-900 px-4 flex flex-col items-center">
       <div className="w-full max-w-4xl">
         <h1 className="text-3xl font-bold text-center mb-6">Kosár</h1>
 

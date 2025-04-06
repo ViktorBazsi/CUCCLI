@@ -57,7 +57,7 @@ export default function PerformancePage() {
   }
 
   return (
-    <main className="pt-24 min-h-screen bg-gradient-to-b from-white to-gray-500 px-4">
+    <main className="pt-24 min-h-screen bg-gradient-to-b from-white to-gray-900 px-4">
       <div className="max-w-5xl mx-auto">
         <h1 className="text-4xl font-extrabold text-center mb-12">
           Állítsd össze az előadásod
