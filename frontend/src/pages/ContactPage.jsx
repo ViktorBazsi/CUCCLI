@@ -10,9 +10,9 @@ export default function ContactPage() {
           Kapcsolat
         </h1>
 
-        <ContactInfo />
-        <ContactMap />
         <ContactForm />
+        <ContactMap />
+        <ContactInfo />
       </div>
     </main>
   );

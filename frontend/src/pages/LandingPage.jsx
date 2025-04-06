@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import HowItWorks from "../components/HowItWorks";
 import TestimonialSlider from "../components/TestimonialSlider";
 import NextPerformance from "../components/NextPerformance";
 
 export default function LandingPage() {
+  const navigate = useNavigate();
+
   return (
     <>
       <main className="pt-24 min-h-screen bg-gradient-to-b from-white to-gray-200 px-4 flex flex-col items-center justify-center text-center">
@@ -15,10 +18,16 @@ export default function LandingPage() {
             és mi megmutatjuk, mit nézz meg ma este!
           </p>
           <div className="mt-8 flex justify-center gap-4">
-            <button className="bg-black text-white px-6 py-3 rounded-2xl text-base font-medium hover:bg-gray-800 transition">
+            <button
+              onClick={() => navigate("/performance")}
+              className="bg-black text-white px-6 py-3 rounded-2xl text-base font-medium hover:bg-gray-800 transition"
+            >
               Kezdés
             </button>
-            <button className="border border-black px-6 py-3 rounded-2xl text-base font-medium hover:bg-black hover:text-white transition">
+            <button
+              onClick={() => navigate("/archive")}
+              className="border border-black px-6 py-3 rounded-2xl text-base font-medium hover:bg-black hover:text-white transition"
+            >
               Böngéssz az archívumban
             </button>
           </div>

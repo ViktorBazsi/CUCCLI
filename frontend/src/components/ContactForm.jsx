@@ -1,11 +1,12 @@
 import { Formik, Form, Field } from "formik";
+import { toast } from "react-toastify";
 
 export default function ContactForm() {
   const handleSubmit = async (values, { resetForm }) => {
     console.log("Visszajelzés elküldve:", values);
     // TODO: fetch vagy axios küldés a szervernek
     resetForm();
-    alert("Köszönjük a visszajelzést!");
+    toast.success("Köszönjük a visszajelzést!");
   };
 
   return (
