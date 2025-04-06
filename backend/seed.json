@@ -1,0 +1,256 @@
+{
+  "users": [
+    {
+      "id": "cuid_63c348b78b39431e905e",
+      "firstName": "Ági",
+      "lastName": "Boros",
+      "username": "agi",
+      "email": "agi@example.com",
+      "phoneNum": "+36301234567",
+      "password": "hashedpassword1",
+      "role": "USER"
+    },
+    {
+      "id": "cuid_c613effd042d44f5b019",
+      "firstName": "Maja",
+      "lastName": "Sipos",
+      "username": "maja",
+      "email": "maja@example.com",
+      "phoneNum": "+36301112222",
+      "password": "hashedpassword2",
+      "role": "PERFORMER"
+    },
+    {
+      "id": "cuid_f40723c84eb1452291b4",
+      "firstName": "Remusz",
+      "lastName": "Szikszai",
+      "username": "remusz",
+      "email": "remusz@example.com",
+      "phoneNum": "+36303334444",
+      "password": "hashedpassword3",
+      "role": "THEATER_ADMIN"
+    },
+    {
+      "id": "cuid_44dd53e3cd01499a85e4",
+      "firstName": "Admin",
+      "lastName": "CUCLI",
+      "username": "admin",
+      "email": "admin@cucli.hu",
+      "phoneNum": "+36309998888",
+      "password": "hashedadmin",
+      "role": "ADMIN"
+    }
+  ],
+  "availableDates": [
+    {
+      "id": "cuid_ec88529ddc18435ba3ae",
+      "date": "2025-04-07T21:35:49.457887Z"
+    },
+    {
+      "id": "cuid_93533ce3ab5a48149d5e",
+      "date": "2025-04-08T21:35:49.458008Z"
+    },
+    {
+      "id": "cuid_ba81b972427b4769b27a",
+      "date": "2025-04-09T21:35:49.458057Z"
+    },
+    {
+      "id": "cuid_a9572a2494e547e69e32",
+      "date": "2025-04-10T21:35:49.458109Z"
+    },
+    {
+      "id": "cuid_682fd2df4b6649518085",
+      "date": "2025-04-11T21:35:49.458144Z"
+    },
+    {
+      "id": "cuid_98c3d78fe2c2438999c3",
+      "date": "2025-04-12T21:35:49.458292Z"
+    },
+    {
+      "id": "cuid_0dabbd85728b4f6a9f2f",
+      "date": "2025-04-13T21:35:49.458542Z"
+    },
+    {
+      "id": "cuid_ce531d31c53c49b39ba0",
+      "date": "2025-04-14T21:35:49.458585Z"
+    },
+    {
+      "id": "cuid_6288e6c314514958be41",
+      "date": "2025-04-15T21:35:49.458622Z"
+    },
+    {
+      "id": "cuid_bc99063974464ee0adf1",
+      "date": "2025-04-16T21:35:49.458634Z"
+    }
+  ],
+  "persons": [
+    {
+      "id": "cuid_56318ab1692c41c595b9",
+      "name": "Kiss Anna",
+      "imageUrl": "https://api.dicebear.com/7.x/initials/svg?seed=KissAnna",
+      "bio": "Kiss Anna életrajza...",
+      "roles": [
+        "WRITER",
+        "ACTOR",
+        "DIRECTOR"
+      ]
+    },
+    {
+      "id": "cuid_2d8c063f07944b36a533",
+      "name": "Bálint Zoltán",
+      "imageUrl": "https://api.dicebear.com/7.x/initials/svg?seed=BálintZoltán",
+      "bio": "Bálint Zoltán életrajza...",
+      "roles": [
+        "DIRECTOR",
+        "ACTOR",
+        "WRITER"
+      ]
+    },
+    {
+      "id": "cuid_92649e65f8144ad7b43a",
+      "name": "Sipos Maja",
+      "imageUrl": "https://api.dicebear.com/7.x/initials/svg?seed=SiposMaja",
+      "bio": "Sipos Maja életrajza...",
+      "roles": [
+        "ACTOR",
+        "DIRECTOR"
+      ]
+    },
+    {
+      "id": "cuid_ba42263e6b45494997c4",
+      "name": "Tóth Bence",
+      "imageUrl": "https://api.dicebear.com/7.x/initials/svg?seed=TóthBence",
+      "bio": "Tóth Bence életrajza...",
+      "roles": [
+        "DIRECTOR",
+        "ACTOR",
+        "WRITER"
+      ]
+    },
+    {
+      "id": "cuid_8e05ceecb2b9430f91e0",
+      "name": "Boros Ági",
+      "imageUrl": "https://api.dicebear.com/7.x/initials/svg?seed=BorosÁgi",
+      "bio": "Boros Ági életrajza...",
+      "roles": [
+        "WRITER",
+        "ACTOR",
+        "DIRECTOR"
+      ]
+    },
+    {
+      "id": "cuid_a0e4b358a1fd4c44a213",
+      "name": "Major Gergő",
+      "imageUrl": "https://api.dicebear.com/7.x/initials/svg?seed=MajorGergő",
+      "bio": "Major Gergő életrajza...",
+      "roles": [
+        "DIRECTOR",
+        "WRITER",
+        "ACTOR"
+      ]
+    }
+  ],
+  "personAvailabilities": [
+    {
+      "id": "cuid_1ac20c833ea04a5aafa1",
+      "personId": "cuid_56318ab1692c41c595b9",
+      "date": "2025-04-16T21:35:49.458634Z"
+    },
+    {
+      "id": "cuid_0193a2e1ac9f4e93a9fd",
+      "personId": "cuid_56318ab1692c41c595b9",
+      "date": "2025-04-13T21:35:49.458542Z"
+    },
+    {
+      "id": "cuid_cc0a9a918d7849b0a08c",
+      "personId": "cuid_56318ab1692c41c595b9",
+      "date": "2025-04-14T21:35:49.458585Z"
+    },
+    {
+      "id": "cuid_988aab30a47743d8804a",
+      "personId": "cuid_2d8c063f07944b36a533",
+      "date": "2025-04-10T21:35:49.458109Z"
+    },
+    {
+      "id": "cuid_3645a114571f43dfb9a5",
+      "personId": "cuid_2d8c063f07944b36a533",
+      "date": "2025-04-13T21:35:49.458542Z"
+    },
+    {
+      "id": "cuid_9f9ba9e81cbb4303b8eb",
+      "personId": "cuid_2d8c063f07944b36a533",
+      "date": "2025-04-16T21:35:49.458634Z"
+    },
+    {
+      "id": "cuid_69faf47c6bd14a51800d",
+      "personId": "cuid_92649e65f8144ad7b43a",
+      "date": "2025-04-15T21:35:49.458622Z"
+    },
+    {
+      "id": "cuid_980849dddd004db38cd6",
+      "personId": "cuid_92649e65f8144ad7b43a",
+      "date": "2025-04-12T21:35:49.458292Z"
+    },
+    {
+      "id": "cuid_8f75914817ee42a49728",
+      "personId": "cuid_92649e65f8144ad7b43a",
+      "date": "2025-04-13T21:35:49.458542Z"
+    },
+    {
+      "id": "cuid_b80edaf729344ceb81e4",
+      "personId": "cuid_ba42263e6b45494997c4",
+      "date": "2025-04-10T21:35:49.458109Z"
+    },
+    {
+      "id": "cuid_95c49553960d44829aa9",
+      "personId": "cuid_ba42263e6b45494997c4",
+      "date": "2025-04-12T21:35:49.458292Z"
+    },
+    {
+      "id": "cuid_e01b5b65c7b646c38017",
+      "personId": "cuid_ba42263e6b45494997c4",
+      "date": "2025-04-14T21:35:49.458585Z"
+    },
+    {
+      "id": "cuid_9782abab0f2e48df8348",
+      "personId": "cuid_8e05ceecb2b9430f91e0",
+      "date": "2025-04-16T21:35:49.458634Z"
+    },
+    {
+      "id": "cuid_a7d4ac4f5b934fb8ba3f",
+      "personId": "cuid_8e05ceecb2b9430f91e0",
+      "date": "2025-04-12T21:35:49.458292Z"
+    },
+    {
+      "id": "cuid_c4f84b13724948e7b35a",
+      "personId": "cuid_8e05ceecb2b9430f91e0",
+      "date": "2025-04-09T21:35:49.458057Z"
+    },
+    {
+      "id": "cuid_ee288f4a0bac430c9bf9",
+      "personId": "cuid_a0e4b358a1fd4c44a213",
+      "date": "2025-04-12T21:35:49.458292Z"
+    },
+    {
+      "id": "cuid_e6f320f3c14c4d08a06f",
+      "personId": "cuid_a0e4b358a1fd4c44a213",
+      "date": "2025-04-08T21:35:49.458008Z"
+    },
+    {
+      "id": "cuid_fa9ded166cc345f28bc2",
+      "personId": "cuid_a0e4b358a1fd4c44a213",
+      "date": "2025-04-15T21:35:49.458622Z"
+    }
+  ],
+  "performances": [
+    {
+      "id": "cuid_df8fdefc1e8e44cf81fd",
+      "topic": "Identitás keresése",
+      "recordingRequest": true,
+      "archived": false,
+      "status": "CREATED",
+      "userId": "cuid_63c348b78b39431e905e",
+      "availableDateId": "cuid_ec88529ddc18435ba3ae"
+    }
+  ]
+}
