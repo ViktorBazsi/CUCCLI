@@ -1,0 +1,141 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+enum Role {
+  WRITER
+  ACTOR
+  DIRECTOR
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  username  String   @unique
+  email     String   @unique
+  password  String
+  isAdmin   Boolean  @default(false)
+
+  performances Performance[]
+  feedbacks    Feedback[]
+  likes        Like[]
+}
+
+model Person {
+  id        String   @id @default(cuid())
+  name      String
+  imageUrl  String?
+  bio       String?
+  roles     Role[]
+
+  performancesWritten  PerformanceWriter[]
+  performancesPlayed   PerformanceActor[]
+  performancesDirected PerformanceDirector[]
+
+  availability         PersonAvailability[] // 👈 Új mező
+}
+
+model PersonAvailability {
+  id        String   @id @default(cuid())
+  personId  String
+  person    Person   @relation(fields: [personId], references: [id])
+  date      DateTime
+  createdAt DateTime @default(now())
+
+  @@unique([personId, date])
+}
+
+model Performance {
+  id        String   @id @default(cuid())
+  topic     String
+  createdAt DateTime @default(now())
+  recordingRequest Boolean @default(false)
+  archived  Boolean  @default(false)
+
+  userId     String
+  user       User    @relation(fields: [userId], references: [id])
+
+  availableDateId String
+  availableDate   AvailableDate @relation(fields: [availableDateId], references: [id])
+
+  writers    PerformanceWriter[]
+  actors     PerformanceActor[]
+  directors  PerformanceDirector[]
+
+  likes      Like[]
+}
+
+model AvailableDate {
+  id        String   @id @default(cuid())
+  date      DateTime @unique
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  performances Performance[] // 👈 Kapcsolat a Performance-hoz
+}
+
+model PerformanceWriter {
+  performanceId String
+  personId      String
+
+  performance Performance @relation(fields: [performanceId], references: [id])
+  person      Person      @relation(fields: [personId], references: [id])
+
+  @@id([performanceId, personId])
+}
+
+model PerformanceActor {
+  performanceId String
+  personId      String
+
+  performance Performance @relation(fields: [performanceId], references: [id])
+  person      Person      @relation(fields: [personId], references: [id])
+
+  @@id([performanceId, personId])
+}
+
+model PerformanceDirector {
+  performanceId String
+  personId      String
+
+  performance Performance @relation(fields: [performanceId], references: [id])
+  person      Person      @relation(fields: [personId], references: [id])
+
+  @@id([performanceId, personId])
+}
+
+model Like {
+  id            String   @id @default(cuid())
+  userId        String
+  performanceId String
+
+  user        User       @relation(fields: [userId], references: [id])
+  performance Performance @relation(fields: [performanceId], references: [id])
+
+  @@unique([userId, performanceId])
+}
+
+model Feedback {
+  id        String   @id @default(cuid())
+  name      String
+  username  String
+  email     String
+  phone     String?
+  message   String
+  createdAt DateTime @default(now())
+
+  userId    String?
+  user      User?     @relation(fields: [userId], references: [id])
+}
