@@ -9,6 +9,7 @@ import LandingPage from "./pages/LandingPage";
 import PerformancePage from "./pages/PerformancePage";
 import CartPage from "./pages/CartPage";
 import ArchivePage from "./pages/ArchivePage";
+import ContactPage from "./pages/ContactPage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/performance" element={<PerformancePage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/archive" element={<ArchivePage />} />
+        <Route path="/contact" element={<ContactPage />} />
       </Routes>
       <Footer />
     </Router>
