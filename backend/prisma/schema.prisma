@@ -20,6 +20,19 @@ enum Role {
   DIRECTOR
 }
 
+enum OrderStatus {
+  CREATED           // Megrendelve
+  PAID_PARTIAL      // Előleg fizetve
+  PAID_FULL         // Teljesen kifizetve
+  IN_PREPARATION    // Előkészítés (kapcsolatfelvétel)
+  WRITING           // Írás alatt
+  REHEARSAL         // Próba
+  PREMIERE          // Bemutató
+  COMPLETED         // Teljesítve
+  CANCELLED         // Lemondva
+}
+
+
 model User {
   id        String   @id @default(cuid())
   name      String
@@ -31,6 +44,18 @@ model User {
   performances Performance[]
   feedbacks    Feedback[]
   likes        Like[]
+  carts        Cart[] // 👈 Új kapcsolat
+}
+
+
+model Cart {
+  id          String       @id @default(cuid())
+  createdAt   DateTime     @default(now())
+
+  userId      String
+  user        User         @relation(fields: [userId], references: [id])
+
+  performances Performance[]
 }
 
 model Person {
@@ -64,18 +89,23 @@ model Performance {
   recordingRequest Boolean @default(false)
   archived  Boolean  @default(false)
 
-  userId     String
-  user       User    @relation(fields: [userId], references: [id])
+  status    OrderStatus @default(CREATED) // 👈 Új mező
+
+  userId    String
+  user      User        @relation(fields: [userId], references: [id])
 
   availableDateId String
   availableDate   AvailableDate @relation(fields: [availableDateId], references: [id])
 
-  writers    PerformanceWriter[]
-  actors     PerformanceActor[]
-  directors  PerformanceDirector[]
+  cartId    String?
+  cart      Cart?       @relation(fields: [cartId], references: [id]) // 👈 opcionális kapcsolat
 
-  likes      Like[]
+  writers   PerformanceWriter[]
+  actors    PerformanceActor[]
+  directors PerformanceDirector[]
+  likes     Like[]
 }
+
 
 model AvailableDate {
   id        String   @id @default(cuid())
