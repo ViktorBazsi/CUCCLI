@@ -17,6 +17,7 @@ export default function PerformancePage() {
           actors: parsed.actors || [],
           recordingRequest: parsed.recordingRequest || false,
           date: parsed.date || "",
+          directors: parsed.directors || "",
         });
       } catch (err) {
         console.error("Hibás kosárformátum a localStorage-ben.", err);
@@ -26,6 +27,7 @@ export default function PerformancePage() {
           actors: [],
           recordingRequest: false,
           date: "",
+          directors: [],
         });
       }
     } else {

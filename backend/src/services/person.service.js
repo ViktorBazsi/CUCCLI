@@ -4,6 +4,9 @@ const listAll = async (filter = {}) => {
   return await prisma.person.findMany({
     ...filter,
     include: {
+      performancesDirected: true,
+      performancesWritten: true,
+      performancesPlayed: true,
       availability: true, // kapcsolódó elérhetőségek
     },
   });

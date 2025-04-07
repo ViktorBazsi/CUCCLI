@@ -1,7 +1,6 @@
 import { Formik, Form } from "formik";
-import WriterSelector from "./WriterSelector";
-import ActorSelector from "./ActorSelector";
 import DateSelector from "./DateSelector";
+import PersonSelector from "./PersonSelector";
 
 export default function PerformanceForm({ initialValues, onSubmit }) {
   return (
@@ -12,6 +11,12 @@ export default function PerformanceForm({ initialValues, onSubmit }) {
     >
       {({ values, setFieldValue }) => (
         <Form className="space-y-12">
+          {/* Dátum kiválasztása */}
+          <DateSelector
+            selectedDate={values.date}
+            setSelectedDate={(date) => setFieldValue("date", date)}
+          />
+
           {/* Téma input */}
           <div className="text-center">
             <label htmlFor="topic" className="block text-xl font-semibold mb-2">
@@ -28,21 +33,27 @@ export default function PerformanceForm({ initialValues, onSubmit }) {
             />
           </div>
 
-          {/* Írók */}
-          <WriterSelector
-            selectedWriters={values.writers}
-            setSelectedWriters={(newWriters) =>
-              setFieldValue("writers", newWriters)
-            }
-          />
-
-          {/* Színészek */}
-          <ActorSelector
-            selectedActors={values.actors}
-            setSelectedActors={(newActors) =>
-              setFieldValue("actors", newActors)
-            }
-          />
+          {/* Alkotók – csak ha van kiválasztott dátum */}
+          {!values.date ? (
+            <p className="text-center text-black text-lg">
+              Kérlek, először válassz egy dátumot, hogy láthasd az elérhető
+              alkotókat!
+            </p>
+          ) : (
+            <PersonSelector
+              dateId={values.date.id}
+              selectedWriters={values.writers}
+              setSelectedWriters={(writers) =>
+                setFieldValue("writers", writers)
+              }
+              selectedActors={values.actors}
+              setSelectedActors={(actors) => setFieldValue("actors", actors)}
+              selectedDirectors={values.directors}
+              setSelectedDirectors={(directors) =>
+                setFieldValue("directors", directors)
+              }
+            />
+          )}
 
           {/* Felvétel kérés */}
           <div className="flex justify-center">
@@ -61,12 +72,6 @@ export default function PerformanceForm({ initialValues, onSubmit }) {
               {values.recordingRequest ? "Felvételt kértem" : "Felvételt kérek"}
             </button>
           </div>
-
-          {/* Dátum */}
-          <DateSelector
-            selectedDate={values.date}
-            setSelectedDate={(date) => setFieldValue("date", date)}
-          />
 
           {/* Kosárba gomb */}
           <div className="text-center pt-6">

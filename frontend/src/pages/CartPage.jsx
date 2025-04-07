@@ -3,6 +3,8 @@ import { useMemo, useEffect, useState, useContext } from "react";
 import AuthContext from "../contexts/AuthContext";
 import LoginPromptModal from "../components/LoginPromptModal";
 
+// ...a meglévő importok változatlanul maradnak
+
 export default function CartPage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -22,16 +24,18 @@ export default function CartPage() {
 
   const actorPrice = 40000;
   const writerPrice = 40000;
+  const directorPrice = 40000;
   const recordingPrice = 100000;
   const shortNoticeDatePrice = 20000;
 
   const actorSubtotal = (formData?.actors?.length || 0) * actorPrice;
   const writerSubtotal = (formData?.writers?.length || 0) * writerPrice;
+  const directorSubtotal = (formData?.directors?.length || 0) * directorPrice;
   const recordingCost = formData?.recordingRequest ? recordingPrice : 0;
 
   const dateCost = useMemo(() => {
-    if (!formData?.date) return 0;
-    const selectedDate = new Date(formData.date);
+    if (!formData?.date?.date) return 0;
+    const selectedDate = new Date(formData.date.date);
     const today = new Date();
     const diffInDays = Math.floor(
       (selectedDate - today) / (1000 * 60 * 60 * 24)
@@ -39,7 +43,12 @@ export default function CartPage() {
     return diffInDays <= 14 ? shortNoticeDatePrice : 0;
   }, [formData?.date]);
 
-  const total = actorSubtotal + writerSubtotal + recordingCost + dateCost;
+  const total =
+    actorSubtotal +
+    writerSubtotal +
+    directorSubtotal +
+    recordingCost +
+    dateCost;
 
   const handleClearCart = () => {
     localStorage.removeItem("cucli_cart");
@@ -96,6 +105,18 @@ export default function CartPage() {
               </ul>
             </div>
 
+            {/* Rendezők */}
+            <div>
+              <h2 className="text-xl font-semibold">Rendezők</h2>
+              <ul className="list-disc list-inside text-gray-700 mt-1">
+                {formData.directors?.map((director, idx) => (
+                  <li key={idx}>
+                    {director.name} – {directorPrice.toLocaleString()} Ft
+                  </li>
+                ))}
+              </ul>
+            </div>
+
             {/* Felvétel */}
             {formData.recordingRequest && (
               <div>
@@ -111,7 +132,7 @@ export default function CartPage() {
               <div>
                 <h2 className="text-xl font-semibold">Dátum</h2>
                 <p className="text-gray-700 mt-1">
-                  {new Date(formData.date).toLocaleDateString("hu-HU", {
+                  {new Date(formData.date.date).toLocaleDateString("hu-HU", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
@@ -143,6 +164,7 @@ export default function CartPage() {
                     summary: {
                       actors: actorSubtotal,
                       writers: writerSubtotal,
+                      directors: directorSubtotal,
                       recording: recordingCost,
                       date: dateCost,
                       total,
@@ -176,7 +198,7 @@ export default function CartPage() {
               </button>
             </div>
 
-            {/* Vissza */}
+            {/* Vissza gomb */}
             <div className="text-center pt-8">
               <button
                 onClick={() => navigate("/performance")}
@@ -188,7 +210,7 @@ export default function CartPage() {
           </div>
         )}
 
-        {/* Modal: csak ha nem bejelentkezett */}
+        {/* Login prompt */}
         <LoginPromptModal
           isOpen={showLoginModal}
           onClose={() => setShowLoginModal(false)}
