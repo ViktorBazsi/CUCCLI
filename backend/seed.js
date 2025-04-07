@@ -1,8 +1,14 @@
-// prisma/seed.js
 import { PrismaClient } from "@prisma/client";
 import data from "./seed.json" assert { type: "json" };
 
 const prisma = new PrismaClient();
+
+function toDayOnlyDate(dateString) {
+  const date = new Date(dateString);
+  return new Date(
+    Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
+  );
+}
 
 async function main() {
   // 1. Users
@@ -15,7 +21,7 @@ async function main() {
   await prisma.availableDate.createMany({
     data: data.availableDates.map((d) => ({
       id: d.id,
-      date: new Date(d.date),
+      date: toDayOnlyDate(d.date),
     })),
     skipDuplicates: true,
   });
@@ -31,7 +37,7 @@ async function main() {
     skipDuplicates: true,
   });
 
-  // 4. Person Roles (updateMany for each)
+  // 4. Person Roles
   for (const person of data.persons) {
     await prisma.person.update({
       where: { id: person.id },
@@ -46,7 +52,7 @@ async function main() {
     data: data.personAvailabilities.map((pa) => ({
       id: pa.id,
       personId: pa.personId,
-      date: new Date(pa.date),
+      date: toDayOnlyDate(pa.date),
     })),
     skipDuplicates: true,
   });
@@ -64,7 +70,7 @@ async function main() {
     },
   });
 
-  console.log("✅ Seed sikeresen lefutott!");
+  console.log("✅ Seed sikeresen lefutott (nap szintű dátumokkal)!");
 }
 
 main()

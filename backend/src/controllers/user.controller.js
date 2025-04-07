@@ -1,6 +1,4 @@
 import userService from "../services/user.service.js";
-import { JWT_SECRET } from "../constants/constants.js";
-import HttpError from "../utils/HttpError.js";
 
 const create = async (req, res, next) => {
   const { username, firstName, lastName, email, phoneNum, password } = req.body;
@@ -19,6 +17,16 @@ const create = async (req, res, next) => {
   }
 };
 
+const listAll = async (req, res, next) => {
+  try {
+    const allUsers = await userService.listAll();
+    res.status(200).json(allUsers);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default {
   create,
+  listAll,
 };

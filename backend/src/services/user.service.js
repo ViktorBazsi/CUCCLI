@@ -38,6 +38,12 @@ const create = async ({
   return newUser;
 };
 
+const listAll = async () => {
+  const allUsers = await prisma.user.findMany();
+  return allUsers;
+};
+
 export default {
   create,
+  listAll,
 };
