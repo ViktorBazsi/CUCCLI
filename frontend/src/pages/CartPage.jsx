@@ -1,12 +1,15 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useMemo, useEffect, useState } from "react";
+import { useMemo, useEffect, useState, useContext } from "react";
+import AuthContext from "../contexts/AuthContext";
+import LoginPromptModal from "../components/LoginPromptModal";
 
 export default function CartPage() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
-  // 1. Kosár betöltése: location.state → fallback localStorage
   const [formData, setFormData] = useState(location.state || null);
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   useEffect(() => {
     if (!formData) {
@@ -17,7 +20,6 @@ export default function CartPage() {
     }
   }, [formData]);
 
-  // 2. Árértékek
   const actorPrice = 40000;
   const writerPrice = 40000;
   const recordingPrice = 100000;
@@ -39,7 +41,6 @@ export default function CartPage() {
 
   const total = actorSubtotal + writerSubtotal + recordingCost + dateCost;
 
-  // 3. Kosár törlése funkció
   const handleClearCart = () => {
     localStorage.removeItem("cucli_cart");
     setFormData(null);
@@ -55,10 +56,7 @@ export default function CartPage() {
           <div className="text-center py-20">
             <p className="text-gray-600 text-lg mb-6">A kosarad üres.</p>
             <button
-              onClick={() => {
-                // localStorage.removeItem("cucli_cart");
-                navigate("/performance");
-              }}
+              onClick={() => navigate("/performance")}
               className="bg-black text-white px-6 py-3 rounded-2xl font-medium hover:bg-gray-800 transition"
             >
               Előadásom összeállítása
@@ -136,6 +134,10 @@ export default function CartPage() {
             <div className="flex flex-wrap justify-center gap-4 pt-8">
               <button
                 onClick={() => {
+                  if (!user) {
+                    setShowLoginModal(true);
+                    return;
+                  }
                   const fullCartData = {
                     ...formData,
                     summary: {
@@ -154,7 +156,13 @@ export default function CartPage() {
               </button>
 
               <button
-                onClick={() => console.log("Vásárlás indítva...")}
+                onClick={() => {
+                  if (!user) {
+                    setShowLoginModal(true);
+                    return;
+                  }
+                  console.log("Vásárlás indítva...");
+                }}
                 className="bg-green-600 text-white px-6 py-3 rounded-2xl font-medium hover:bg-green-700 transition"
               >
                 Vásárlás
@@ -171,10 +179,7 @@ export default function CartPage() {
             {/* Vissza */}
             <div className="text-center pt-8">
               <button
-                onClick={() => {
-                //   localStorage.removeItem("cucli_cart");
-                  navigate("/performance");
-                }}
+                onClick={() => navigate("/performance")}
                 className="bg-black text-white px-6 py-3 rounded-2xl font-medium hover:bg-gray-800 transition mb-32"
               >
                 Vissza az előadásomhoz
@@ -182,6 +187,12 @@ export default function CartPage() {
             </div>
           </div>
         )}
+
+        {/* Modal: csak ha nem bejelentkezett */}
+        <LoginPromptModal
+          isOpen={showLoginModal}
+          onClose={() => setShowLoginModal(false)}
+        />
       </div>
     </main>
   );

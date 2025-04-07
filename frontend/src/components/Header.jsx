@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { Menu, X, ShoppingCart, User } from "lucide-react";
+import { useEffect, useState, useContext } from "react";
+import { Menu, X, ShoppingCart, User, LogOut } from "lucide-react";
 // eslint-disable-next-line no-unused-vars
-import { AnimatePresence, motion } from "framer-motion"; // <- hagyd itt, akkor is ha "unused"
+import { AnimatePresence, motion } from "framer-motion";
+import AuthContext from "../contexts/AuthContext";
 
 export default function Header() {
+  const { user, logout } = useContext(AuthContext);
+  const isLoggedIn = !!user;
+
   const [transparentHeader, setTransparentHeader] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -20,14 +24,53 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Szerepkör alapján menüpont
+  const getRoleMenuItem = () => {
+    if (!user) return null;
+
+    switch (user.role) {
+      case "USER":
+        return (
+          <Link to="/my-performance-status" className="hover:underline">
+            Előadásom állapota
+          </Link>
+        );
+      case "THEATER_ADMIN":
+        return (
+          <Link to="/upload-dates" className="hover:underline">
+            Időpontok feltöltése
+          </Link>
+        );
+      case "PERFORMER":
+        return (
+          <Link to="/my-availability" className="hover:underline">
+            Mikor érek rá?
+          </Link>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <>
       <header className={headerClass}>
-        <div className="flex justify-between items-center max-w-7xl mx-auto">
-          {/* Logo */}
-          <Link to="/" className="text-2xl font-extrabold tracking-tight">
-            CUCLI
-          </Link>
+        <div className="flex justify-between items-center max-w-7xl mx-auto w-full">
+          {/* Bal oldal – Üdvözlés vagy logó */}
+          <div className="text-2xl font-extrabold tracking-tight">
+            {isLoggedIn ? (
+              <>
+                <span className="block lg:hidden">{user.firstName}</span>
+                <span className="hidden lg:block">
+                  Üdv nálunk, {user.firstName}!
+                </span>
+              </>
+            ) : (
+              <Link to="/" className="block">
+                <span className="block">CUCLI</span>
+              </Link>
+            )}
+          </div>
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex gap-6 text-lg font-medium items-center">
@@ -43,24 +86,37 @@ export default function Header() {
             <Link to="/contact" className="hover:underline">
               Kapcsolat
             </Link>
+
+            {/* Role-alapú menüpont */}
+            {getRoleMenuItem()}
           </nav>
 
-          {/* Jobb oldal ikonok és hamburger */}
+          {/* Jobb oldal ikonok */}
           <div className="flex items-center gap-4">
-            {/* Bejelentkezés */}
-            <Link
-              to="/login"
-              className="hover:underline flex items-center gap-1"
-            >
-              <User size={22} />
-            </Link>
+            {/* Bejelentkezés / Kijelentkezés ikon */}
+            {isLoggedIn ? (
+              <button
+                onClick={logout}
+                className="hover:text-red-600 transition"
+                title="Kijelentkezés"
+              >
+                <LogOut size={22} />
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                className="hover:underline flex items-center gap-1"
+              >
+                <User size={22} />
+              </Link>
+            )}
 
             {/* Kosár */}
             <Link to="/cart" className="hover:underline flex items-center">
               <ShoppingCart size={22} />
             </Link>
 
-            {/* Hamburger csak mobilra */}
+            {/* Hamburger csak mobilon */}
             <button
               className="lg:hidden text-black z-50"
               onClick={() => setMenuOpen(!menuOpen)}
@@ -111,6 +167,7 @@ export default function Header() {
             >
               Kapcsolat
             </Link>
+            {getRoleMenuItem()}
           </motion.div>
         )}
       </AnimatePresence>
