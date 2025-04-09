@@ -1,7 +1,18 @@
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 
-export default function PerformanceModal({ performance, onClose }) {
+export default function PerformanceModal({ performance, onClose, isLoggedIn }) {
+  const [isLiked, setIsLiked] = useState(performance.isLiked || false);
+
+  const handleLikeToggle = () => {
+    if (!isLoggedIn) return;
+    setIsLiked((prev) => !prev);
+    // TODO: Backend kérés ide
+  };
+
+  const textUrl = performance.textUrl || "https://example.com/sample.pdf";
+
   return (
     <AnimatePresence>
       {performance && (
@@ -26,12 +37,26 @@ export default function PerformanceModal({ performance, onClose }) {
               ✕
             </button>
 
-            {/* Kép */}
-            <img
-              src={performance.imageUrl}
-              alt={`${performance.title} kép helye`}
-              className="w-full h-64 object-cover rounded-xl mb-6 shadow-md"
-            />
+            {/* Kép + szívecske */}
+            <div className="relative mb-6">
+              <img
+                src={performance.imageUrl}
+                alt={`${performance.title} kép helye`}
+                className="w-full h-64 object-cover rounded-xl shadow-md"
+              />
+
+              {isLoggedIn && (
+                <button
+                  onClick={handleLikeToggle}
+                  className={`absolute bottom-3 right-3 text-3xl transition transform hover:scale-110 hover:animate-pulse ${
+                    isLiked ? "text-red-500" : "text-white hover:text-red-400"
+                  }`}
+                  title={isLiked ? "Kedvelted" : "Kedvelés"}
+                >
+                  {isLiked ? "❤️" : "🤍"}
+                </button>
+              )}
+            </div>
 
             {/* Tartalom */}
             <h2 className="text-2xl font-bold mb-2">{performance.title}</h2>
@@ -60,15 +85,18 @@ export default function PerformanceModal({ performance, onClose }) {
               </ul>
             </div>
 
-            <div className="text-center">
-              <a
-                href={performance.textUrl}
-                download
-                className="inline-block bg-black text-white px-6 py-2 rounded-2xl hover:bg-gray-800 transition"
-              >
-                Előadás szövegének letöltése
-              </a>
-            </div>
+            {/* Letöltés gomb */}
+            {textUrl && (
+              <div className="text-center">
+                <a
+                  href={textUrl}
+                  download
+                  className="inline-block bg-black text-white px-6 py-2 rounded-2xl hover:bg-gray-800 transition"
+                >
+                  Előadás szövegének letöltése
+                </a>
+              </div>
+            )}
           </motion.div>
         </motion.div>
       )}

@@ -98,6 +98,7 @@ model Performance {
   recordingRequest Boolean @default(false)
   archived  Boolean  @default(false)
   imageUrl  String?
+  textUrl   String?
   quote     String?
 
   status    OrderStatus @default(CREATED) // 👈 Új mező

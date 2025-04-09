@@ -157,6 +157,7 @@ export default function ArchivePage() {
           <PerformanceModal
             performance={selectedPerformance}
             onClose={() => setSelectedPerformance(null)}
+            isLoggedIn={isLoggedIn} // 👉 EZ HIÁNYZOTT
           />
         )}
       </div>
