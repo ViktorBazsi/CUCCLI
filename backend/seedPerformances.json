@@ -1,0 +1,122 @@
+[
+  {
+    "id": "cuid_xyz123",
+    "title": "Az identitás színháza",
+    "recordingRequest": true,
+    "archived": true,
+    "imageUrl": "https://placehold.co/600x400?text=Identitás",
+    "quote": "„Minden csak szerep.”",
+    "status": "CREATED",
+    "userId": null,
+    "availableDateId": null,
+    "cartId": null
+  },
+  {
+    "id": "cuid_xyz124",
+    "title": "A múlt árnyékában",
+    "recordingRequest": false,
+    "archived": true,
+    "imageUrl": "https://placehold.co/600x400?text=Múlt",
+    "quote": "„A múlt nem felejt.”",
+    "status": "CREATED",
+    "userId": null,
+    "availableDateId": null,
+    "cartId": null
+  },
+  {
+    "id": "cuid_xyz125",
+    "title": "Tükör által homályosan",
+    "recordingRequest": true,
+    "archived": false,
+    "imageUrl": "https://placehold.co/600x400?text=Tükör",
+    "quote": "„Ki vagyok én valójában?”",
+    "status": "CREATED",
+    "userId": null,
+    "availableDateId": null,
+    "cartId": null
+  },
+  {
+    "id": "cuid_xyz126",
+    "title": "Az utolsó felvonás",
+    "recordingRequest": false,
+    "archived": true,
+    "imageUrl": "https://placehold.co/600x400?text=Felvonás",
+    "quote": "„A vég mindig új kezdet.”",
+    "status": "CREATED",
+    "userId": null,
+    "availableDateId": null,
+    "cartId": null
+  },
+  {
+    "id": "cuid_xyz127",
+    "title": "Álmok színháza",
+    "recordingRequest": true,
+    "archived": false,
+    "imageUrl": "https://placehold.co/600x400?text=Álmok",
+    "quote": "„A valóság csak egy opció.”",
+    "status": "CREATED",
+    "userId": null,
+    "availableDateId": null,
+    "cartId": null
+  },
+  {
+    "id": "cuid_xyz128",
+    "title": "Csendek dialógusa",
+    "recordingRequest": false,
+    "archived": true,
+    "imageUrl": "https://placehold.co/600x400?text=Csend",
+    "quote": "„Néha a hallgatás beszél.”",
+    "status": "CREATED",
+    "userId": null,
+    "availableDateId": null,
+    "cartId": null
+  },
+  {
+    "id": "cuid_xyz129",
+    "title": "Kifordítva befelé",
+    "recordingRequest": true,
+    "archived": false,
+    "imageUrl": "https://placehold.co/600x400?text=Befelé",
+    "quote": "„A belső világ külső vetülete.”",
+    "status": "CREATED",
+    "userId": null,
+    "availableDateId": null,
+    "cartId": null
+  },
+  {
+    "id": "cuid_xyz130",
+    "title": "Árnyak a reflektorban",
+    "recordingRequest": false,
+    "archived": true,
+    "imageUrl": "https://placehold.co/600x400?text=Árnyak",
+    "quote": "„Nem minden fény ragyogás.”",
+    "status": "CREATED",
+    "userId": null,
+    "availableDateId": null,
+    "cartId": null
+  },
+  {
+    "id": "cuid_xyz131",
+    "title": "Rezonancia",
+    "recordingRequest": true,
+    "archived": true,
+    "imageUrl": "https://placehold.co/600x400?text=Rezonancia",
+    "quote": "„Minden rezdülés számít.”",
+    "status": "CREATED",
+    "userId": null,
+    "availableDateId": null,
+    "cartId": null
+  },
+  {
+    "id": "cuid_xyz132",
+    "title": "A jelen illúziója",
+    "recordingRequest": false,
+    "archived": true,
+    "imageUrl": "https://placehold.co/600x400?text=Jelen",
+    "quote": "„A most csak egy pillanatnyi emlék.”",
+    "status": "CREATED",
+    "userId": null,
+    "availableDateId": null,
+    "cartId": null
+  }
+]

@@ -1,38 +1,63 @@
-import { useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import PerformanceCard from "../components/PerformanceCard";
 import PerformanceModal from "../components/PerformanceModal";
-import { dummyPerformances } from "../assets/dummyPerformances";
+import performanceService from "../services/performance.service";
+import AuthContext from "../contexts/AuthContext";
 
 const ITEMS_PER_PAGE = 6;
 
 export default function ArchivePage() {
+  const { user } = useContext(AuthContext);
+  const isLoggedIn = !!user;
+  const [allPerformances, setAllPerformances] = useState([]);
   const [selectedPerformance, setSelectedPerformance] = useState(null);
   const [filters, setFilters] = useState({
     title: "",
     creator: "",
     date: "",
-    isLikedOnly: false, // új szűrő
+    isLikedOnly: false,
   });
 
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Backendről lekérés archivált előadásokra
+  useEffect(() => {
+    const fetchArchived = async () => {
+      try {
+        const data = await performanceService.list({ archived: true });
+        setAllPerformances(data);
+        console.log("Szervertől kapott archivált előadások:", data);
+      } catch (err) {
+        console.error("Nem sikerült betölteni az archív előadásokat:", err);
+      }
+    };
+
+    fetchArchived();
+  }, []);
+
   const handleFilterChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
-    setCurrentPage(1); // szűrésnél mindig lapozzunk vissza az első oldalra
+    setCurrentPage(1);
   };
 
-  const filteredPerformances = dummyPerformances.filter((perf) => {
+  const filteredPerformances = allPerformances.filter((perf) => {
+    if (!perf || !perf.title) return false;
+
     const titleMatch = perf.title
       .toLowerCase()
       .includes(filters.title.toLowerCase());
+
     const creatorMatch =
+      !filters.creator || // ha nincs beírva semmi, ne szűrjünk rá
       perf.writers.some((w) =>
-        w.toLowerCase().includes(filters.creator.toLowerCase())
+        w.name.toLowerCase().includes(filters.creator.toLowerCase())
       ) ||
       perf.actors.some((a) =>
-        a.toLowerCase().includes(filters.creator.toLowerCase())
+        a.name.toLowerCase().includes(filters.creator.toLowerCase())
       );
-    const dateMatch = perf.date.includes(filters.date);
+
+    const dateMatch = !filters.date || perf.date?.includes(filters.date);
+
     const likedMatch = !filters.isLikedOnly || perf.isLiked;
 
     return titleMatch && creatorMatch && dateMatch && likedMatch;
@@ -99,6 +124,7 @@ export default function ArchivePage() {
               key={perf.id}
               performance={perf}
               onClick={() => setSelectedPerformance(perf)}
+              isLoggedIn={isLoggedIn}
             />
           ))}
         </div>

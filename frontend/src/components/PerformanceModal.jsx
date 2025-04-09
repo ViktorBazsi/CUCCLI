@@ -28,15 +28,19 @@ export default function PerformanceModal({ performance, onClose }) {
 
             {/* Kép */}
             <img
-              src={performance.image}
-              alt={performance.title}
+              src={performance.imageUrl}
+              alt={`${performance.title} kép helye`}
               className="w-full h-64 object-cover rounded-xl mb-6 shadow-md"
             />
 
             {/* Tartalom */}
             <h2 className="text-2xl font-bold mb-2">{performance.title}</h2>
-            <p className="text-gray-500 italic mb-4">„{performance.quote}”</p>
-            <p className="text-sm text-gray-500 mb-4">{performance.date}</p>
+            <p className="text-gray-500 italic mb-4">
+              „{performance.quote || "még nincs idézet"}”
+            </p>
+            <p className="text-sm text-gray-500 mb-4">
+              {performance.date || "Nincs dátum megadva"}
+            </p>
 
             <div className="mb-4">
               <h3 className="font-semibold text-gray-800">Írók:</h3>
