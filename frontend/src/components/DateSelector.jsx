@@ -7,7 +7,9 @@ export default function DateSelector({ selectedDate, setSelectedDate }) {
   useEffect(() => {
     const fetchDates = async () => {
       try {
-        const data = await dateService.listAll();
+        // ha azt akarod, hogy az összes - már elmúlt dátumokat is - megjelenítse:
+        // const data = await dateService.listAll({ possible: false });
+        const data = await dateService.listAll(); //így csak az aktuális dátum + 5 naptól listáz
         setDates(data);
       } catch (error) {
         console.error("Hiba az időpontok lekérésekor:", error);

@@ -2,8 +2,8 @@ import dateService from "../services/date.service.js";
 
 const listAll = async (req, res, next) => {
   try {
-    const allDates = await dateService.listAll();
-    res.status(200).json(allDates);
+    const result = await dateService.listAll(req.query);
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }

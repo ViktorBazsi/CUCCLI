@@ -1,0 +1,254 @@
+{
+  "personAvailabilities": [
+    {
+      "id": "05715e85-1687-4458-bfd2-7703b0edd60b",
+      "personId": "person_01",
+      "date": "2025-04-14"
+    },
+    {
+      "id": "d1194b8a-d793-48bb-a3fa-b40b5716cff1",
+      "personId": "person_01",
+      "date": "2025-04-17"
+    },
+    {
+      "id": "7c7a0c23-a597-4060-bc76-c771d758c158",
+      "personId": "person_01",
+      "date": "2025-04-20"
+    },
+    {
+      "id": "86ae28f2-6263-4601-b3de-6d86d8a075b2",
+      "personId": "person_01",
+      "date": "2025-04-23"
+    },
+    {
+      "id": "ba42c41a-6fae-4911-b239-7ff97ac75519",
+      "personId": "person_01",
+      "date": "2025-04-26"
+    },
+    {
+      "id": "59c590f0-bcca-4d3b-b5af-72c8ac2e0a03",
+      "personId": "person_01",
+      "date": "2025-04-29"
+    },
+    {
+      "id": "95bdf14a-146c-489c-b1fb-9c574e42fd11",
+      "personId": "person_01",
+      "date": "2025-05-02"
+    },
+    {
+      "id": "3e58f584-3a59-4472-befc-96b51a36c788",
+      "personId": "person_01",
+      "date": "2025-05-05"
+    },
+    {
+      "id": "62639b1e-0be9-4fcb-b5a2-fe03af25608a",
+      "personId": "person_01",
+      "date": "2025-05-08"
+    },
+    {
+      "id": "de917be7-8fad-4678-9eec-f29829438f05",
+      "personId": "person_01",
+      "date": "2025-05-11"
+    },
+    {
+      "id": "d18bb653-e16c-4102-96cd-e49947006241",
+      "personId": "person_02",
+      "date": "2025-04-14"
+    },
+    {
+      "id": "552a8980-e4f4-4dc7-bec7-dc5f992c5aed",
+      "personId": "person_02",
+      "date": "2025-04-17"
+    },
+    {
+      "id": "6c6e8480-ff71-4a35-ad96-8c8cb3585c5c",
+      "personId": "person_02",
+      "date": "2025-04-20"
+    },
+    {
+      "id": "c5eec9de-5e50-4513-bc31-df154867b400",
+      "personId": "person_02",
+      "date": "2025-04-23"
+    },
+    {
+      "id": "8b111a86-bced-47fd-9c53-5f5d1cae98a2",
+      "personId": "person_02",
+      "date": "2025-04-26"
+    },
+    {
+      "id": "1db4358d-8c71-46ab-9cc8-bdc4f2d15f77",
+      "personId": "person_02",
+      "date": "2025-04-29"
+    },
+    {
+      "id": "27ad3e9f-52f3-429a-8896-b05f05f4597d",
+      "personId": "person_02",
+      "date": "2025-05-02"
+    },
+    {
+      "id": "19ecda00-8062-4c01-9946-e802d12a5f82",
+      "personId": "person_02",
+      "date": "2025-05-05"
+    },
+    {
+      "id": "1b29cc54-2809-4fc4-9979-9ef0c3d6ab28",
+      "personId": "person_02",
+      "date": "2025-05-08"
+    },
+    {
+      "id": "d4bb4997-a802-4daf-b5d2-84b9c521663d",
+      "personId": "person_02",
+      "date": "2025-05-11"
+    },
+    {
+      "id": "d70e1a23-6b85-4417-9f85-387393874d8b",
+      "personId": "person_03",
+      "date": "2025-04-14"
+    },
+    {
+      "id": "7ecef943-ddce-447e-9ba8-9544abe29449",
+      "personId": "person_03",
+      "date": "2025-04-17"
+    },
+    {
+      "id": "0abc9af4-b043-4f14-9949-971196ea0478",
+      "personId": "person_03",
+      "date": "2025-04-20"
+    },
+    {
+      "id": "40a1273a-c821-4494-8380-70353c1ab186",
+      "personId": "person_03",
+      "date": "2025-04-23"
+    },
+    {
+      "id": "392be870-acc3-415d-a2ce-fb5a4b901ecc",
+      "personId": "person_03",
+      "date": "2025-04-26"
+    },
+    {
+      "id": "1a83380a-34e8-43a6-9958-17a66abcf65b",
+      "personId": "person_03",
+      "date": "2025-04-29"
+    },
+    {
+      "id": "98730cf6-b493-4bc0-b7da-cf4892fe7e91",
+      "personId": "person_03",
+      "date": "2025-05-02"
+    },
+    {
+      "id": "6e169eea-994f-42f9-9f41-dc69daec605b",
+      "personId": "person_03",
+      "date": "2025-05-05"
+    },
+    {
+      "id": "ae364951-a4d3-4ce3-8828-2afef1e6d256",
+      "personId": "person_03",
+      "date": "2025-05-08"
+    },
+    {
+      "id": "7d6916f0-a9f1-4545-951a-8ca50b919c48",
+      "personId": "person_03",
+      "date": "2025-05-11"
+    },
+    {
+      "id": "907e1887-5bcc-4943-a67d-f8a42c0642f4",
+      "personId": "person_04",
+      "date": "2025-04-14"
+    },
+    {
+      "id": "304082d4-0e6a-481f-a61e-5b6450b24c2c",
+      "personId": "person_04",
+      "date": "2025-04-17"
+    },
+    {
+      "id": "c15c7a9a-cbfd-44d0-8ac0-083e2d19cdf6",
+      "personId": "person_04",
+      "date": "2025-04-20"
+    },
+    {
+      "id": "c50f2762-cc23-46e9-b36d-cf0c1680a682",
+      "personId": "person_04",
+      "date": "2025-04-23"
+    },
+    {
+      "id": "c6b7592e-6584-4f39-b920-97b27276fc2d",
+      "personId": "person_04",
+      "date": "2025-04-26"
+    },
+    {
+      "id": "b24bfb5c-bf61-49dc-ae5b-a82275cfdeda",
+      "personId": "person_04",
+      "date": "2025-04-29"
+    },
+    {
+      "id": "44230e61-fda7-4f51-93fd-cdd6c2345663",
+      "personId": "person_04",
+      "date": "2025-05-02"
+    },
+    {
+      "id": "a7c912ca-83dd-4c5d-826f-72605bcc1114",
+      "personId": "person_04",
+      "date": "2025-05-05"
+    },
+    {
+      "id": "b824c211-accd-4fe6-b0a2-e27998904f77",
+      "personId": "person_04",
+      "date": "2025-05-08"
+    },
+    {
+      "id": "108d3222-2eea-4105-ba07-4a7e09f1efe3",
+      "personId": "person_04",
+      "date": "2025-05-11"
+    },
+    {
+      "id": "302a772c-6653-4428-baf4-7141133c147f",
+      "personId": "person_05",
+      "date": "2025-04-14"
+    },
+    {
+      "id": "76cc3350-5dc5-4074-9b92-85becf05abbc",
+      "personId": "person_05",
+      "date": "2025-04-17"
+    },
+    {
+      "id": "831a240a-c43a-4c02-bd42-4d38c2815fb9",
+      "personId": "person_05",
+      "date": "2025-04-20"
+    },
+    {
+      "id": "8e0ec1de-0f53-4290-a395-c17c78ebb2f6",
+      "personId": "person_05",
+      "date": "2025-04-23"
+    },
+    {
+      "id": "0c89a9d6-da98-459e-964d-42e226c50e19",
+      "personId": "person_05",
+      "date": "2025-04-26"
+    },
+    {
+      "id": "c16a5e0f-3086-438b-b932-94a72d9d3a5b",
+      "personId": "person_05",
+      "date": "2025-04-29"
+    },
+    {
+      "id": "98c379f9-2f2a-4984-9761-20373f1936a0",
+      "personId": "person_05",
+      "date": "2025-05-02"
+    },
+    {
+      "id": "926868b5-93f8-44e2-9264-5e71e7d5a11f",
+      "personId": "person_05",
+      "date": "2025-05-05"
+    },
+    {
+      "id": "977217cb-7047-4cdb-a6f7-d3bc96169808",
+      "personId": "person_05",
+      "date": "2025-05-08"
+    },
+    {
+      "id": "4f2948bb-e94a-459f-9a8a-d1fe9ed7f0e5",
+      "personId": "person_05",
+      "date": "2025-05-11"
+    }
+  ]
+}

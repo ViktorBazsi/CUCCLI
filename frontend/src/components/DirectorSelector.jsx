@@ -47,7 +47,9 @@ export default function DirectorSelector({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const isSelected = (director) =>
-    selectedDirectors.some((d) => d.name === director.name);
+    Array.isArray(selectedDirectors) &&
+    selectedDirectors.some((d) => d.id === director.id);
+  
 
   const toggleDirector = (director) => {
     const alreadySelected = isSelected(director);
