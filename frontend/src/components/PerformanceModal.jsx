@@ -1,14 +1,24 @@
+import { useEffect, useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
 
-export default function PerformanceModal({ performance, onClose, isLoggedIn }) {
+export default function PerformanceModal({
+  performance,
+  onClose,
+  isLoggedIn,
+  onToggleLike,
+}) {
   const [isLiked, setIsLiked] = useState(performance.isLiked || false);
 
-  const handleLikeToggle = () => {
+  // Ha a performance prop frissül (pl. újratöltés után), szinkronizáljuk:
+  useEffect(() => {
+    setIsLiked(performance.isLiked || false);
+  }, [performance]);
+
+  const handleLikeClick = () => {
     if (!isLoggedIn) return;
-    setIsLiked((prev) => !prev);
-    // TODO: Backend kérés ide
+    onToggleLike(performance.id);
+    setIsLiked((prev) => !prev); // lokális frissítés animációhoz
   };
 
   const textUrl = performance.textUrl || "https://example.com/sample.pdf";
@@ -47,7 +57,7 @@ export default function PerformanceModal({ performance, onClose, isLoggedIn }) {
 
               {isLoggedIn && (
                 <button
-                  onClick={handleLikeToggle}
+                  onClick={handleLikeClick}
                   className={`absolute bottom-3 right-3 text-3xl transition transform hover:scale-110 hover:animate-pulse ${
                     isLiked ? "text-red-500" : "text-white hover:text-red-400"
                   }`}

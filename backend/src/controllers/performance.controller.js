@@ -13,12 +13,12 @@ const listArchived = async (req, res, next) => {
           }
         : {};
 
-    const archivedPerformances = await performanceService.listArchived(filter);
+    const performances = await performanceService.listArchived(filter);
 
-    const enrichedPerformances = archivedPerformances.map((perf) => {
-      const isLiked = perf.likes.some(
-        (like) => like.userId === req.user?.id
-      );
+    const enriched = performances.map((perf) => {
+      const isLiked = req.user
+        ? perf.likes.some((like) => like.userId === req.user.id)
+        : false;
 
       return {
         ...perf,
@@ -26,7 +26,7 @@ const listArchived = async (req, res, next) => {
       };
     });
 
-    res.status(200).json(enrichedPerformances);
+    res.status(200).json(enriched);
   } catch (error) {
     next(error);
   }

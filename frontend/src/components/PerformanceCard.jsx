@@ -1,20 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function PerformanceCard({ performance, onClick, isLoggedIn }) {
+export default function PerformanceCard({
+  performance,
+  onClick,
+  isLoggedIn,
+  onToggleLike, // 👈 ide jön a parentből
+}) {
   const [isLiked, setIsLiked] = useState(performance.isLiked || false);
 
-  // const toggleLike = (e) => {
-  //   e.stopPropagation(); // ne nyissa meg a modalt
-  //   setIsLiked((prev) => !prev);
+  // 🔄 Ha performance.isLiked változik (pl. újratöltésnél), frissítjük a belső állapotot is
+  useEffect(() => {
+    setIsLiked(performance.isLiked || false);
+  }, [performance.isLiked]);
 
-  //   // Később: itt lehet majd fetch/axios POST a szervernek
-  //   // fetch(`/api/like/${performance.id}`, { method: "POST", body: JSON.stringify({ like: !isLiked }) })
-  // };
-
-  const toggleLike = (e) => {
+  const handleClick = (e) => {
     e.stopPropagation();
-    if (!isLoggedIn) return; // nem engedjük a nem bejelentkezett usernek
+    if (!isLoggedIn) return;
     setIsLiked((prev) => !prev);
+    onToggleLike(performance.id); // 👈 helyes hívás
   };
 
   return (
@@ -28,7 +31,7 @@ export default function PerformanceCard({ performance, onClick, isLoggedIn }) {
         className="w-full h-48 object-cover"
       />
       <div className="p-4">
-        <h2 className="text-xl font-bold text-gray-900">{performance.topic}</h2>
+        <h2 className="text-xl font-bold text-gray-900">{performance.title}</h2>
         <p className="text-gray-600 italic mb-2">
           „{performance.quote || "nincs még idézet"}”
         </p>
@@ -37,15 +40,16 @@ export default function PerformanceCard({ performance, onClick, isLoggedIn }) {
         </p>
       </div>
 
-      {/* Szívecske ikon */}
-      <button
-        onClick={toggleLike}
-        className="absolute top-3 right-3 text-2xl cursor-pointer"
-        disabled={!isLoggedIn}
-        title={isLoggedIn ? "Kedvenc" : "Jelentkezz be a lájkoláshoz"}
-      >
-        {isLiked ? "❤️" : "🤍"}
-      </button>
+      {isLoggedIn && (
+        <button
+          onClick={handleClick}
+          className="absolute top-3 right-3 text-2xl cursor-pointer"
+          disabled={!isLoggedIn}
+          title="Kedvenc"
+        >
+          {isLiked ? "❤️" : "🤍"}
+        </button>
+      )}
     </div>
   );
 }

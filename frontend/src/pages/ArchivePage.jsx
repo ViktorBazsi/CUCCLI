@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import PerformanceCard from "../components/PerformanceCard";
 import PerformanceModal from "../components/PerformanceModal";
 import performanceService from "../services/performance.service";
+import likeService from "../services/like.service";
 import AuthContext from "../contexts/AuthContext";
 
 const ITEMS_PER_PAGE = 6;
@@ -34,6 +35,33 @@ export default function ArchivePage() {
 
     fetchArchived();
   }, []);
+
+  const handleLikeToggle = async (performanceId) => {
+    console.log("✅ Like gomb megnyomva:", performanceId);
+
+    try {
+      const res = await likeService.toggleLike(performanceId);
+      console.log("🟢 Válasz a backendtől:", res);
+
+      // Frissítsd a listát
+      setAllPerformances((prev) =>
+        prev.map((p) =>
+          p.id === performanceId ? { ...p, isLiked: !p.isLiked } : p
+        )
+      );
+
+      // Frissítsd a modalban lévőt is a frissített listából
+      setSelectedPerformance((prev) => {
+        if (!prev || prev.id !== performanceId) return prev;
+        return {
+          ...prev,
+          isLiked: !prev.isLiked,
+        };
+      });
+    } catch (err) {
+      console.error("🔴 Nem sikerült kedvelni az előadást:", err);
+    }
+  };
 
   const handleFilterChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
@@ -125,6 +153,7 @@ export default function ArchivePage() {
               performance={perf}
               onClick={() => setSelectedPerformance(perf)}
               isLoggedIn={isLoggedIn}
+              onToggleLike={handleLikeToggle}
             />
           ))}
         </div>
@@ -158,6 +187,7 @@ export default function ArchivePage() {
             performance={selectedPerformance}
             onClose={() => setSelectedPerformance(null)}
             isLoggedIn={isLoggedIn} // 👉 EZ HIÁNYZOTT
+            onToggleLike={handleLikeToggle}
           />
         )}
       </div>
