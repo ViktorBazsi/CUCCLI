@@ -19,7 +19,6 @@ export default function ContactForm() {
   useEffect(() => {
     if (user) {
       const fullName = `${user.lastName || ""} ${user.firstName || ""} `.trim();
-      console.log(fullName);
 
       setInitialValues((prev) => ({
         ...prev,
