@@ -48,12 +48,13 @@ model User {
   phoneNum  String?
   password  String
 
-  role      UserRole @default(USER) // 👈 új jogosultsági rendszer
+  role      UserRole @default(USER)
 
   performances Performance[]
-  feedbacks    Feedback[]
   likes        Like[]
   carts        Cart[]
+  feedbacks    Feedback[]         // 👈 kapcsolódó feedback-ek
+  ratings      Rating[]           // 👈 kapcsolódó értékelések
 }
 
 
@@ -91,6 +92,7 @@ model PersonAvailability {
   @@unique([personId, date])
 }
 
+
 model Performance {
   id        String   @id @default(cuid())
   title     String
@@ -101,7 +103,7 @@ model Performance {
   textUrl   String?
   quote     String?
 
-  status    OrderStatus @default(CREATED) // 👈 Új mező
+  status    OrderStatus @default(CREATED)
 
   userId    String?
   user      User?        @relation(fields: [userId], references: [id])
@@ -110,14 +112,16 @@ model Performance {
   availableDate   AvailableDate? @relation(fields: [availableDateId], references: [id])
 
   cartId    String?
-  cart      Cart?       @relation(fields: [cartId], references: [id]) // 👈 opcionális kapcsolat
+  cart      Cart?       @relation(fields: [cartId], references: [id])
 
   writers   PerformanceWriter[]
   actors    PerformanceActor[]
   directors PerformanceDirector[]
   likes     Like[]
-}
 
+  feedbacks Feedback[]   // 👈 kapcsolódó visszajelzések
+  ratings   Rating[]     // 👈 értékelések
+}
 
 model AvailableDate {
   id        String   @id @default(cuid())
@@ -170,14 +174,27 @@ model Like {
 }
 
 model Feedback {
-  id        String   @id @default(cuid())
-  name      String
-  username  String
-  email     String
-  phone     String?
-  message   String
-  createdAt DateTime @default(now())
+  id            String   @id @default(cuid())
+  message       String
+  createdAt     DateTime @default(now())
 
-  userId    String?
-  user      User?     @relation(fields: [userId], references: [id])
+  userId        String
+  performanceId String
+
+  user        User       @relation(fields: [userId], references: [id])
+  performance Performance @relation(fields: [performanceId], references: [id])
+}
+
+model Rating {
+  id            String   @id @default(cuid())
+  value         Int      // 1-5 csillag
+  createdAt     DateTime @default(now())
+
+  userId        String
+  performanceId String
+
+  user        User       @relation(fields: [userId], references: [id])
+  performance Performance @relation(fields: [performanceId], references: [id])
+
+  @@unique([userId, performanceId]) // 👈 minden user egyszer értékelhet egy performance-t
 }
