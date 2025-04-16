@@ -1,18 +1,42 @@
-import { useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Formik, Form, Field } from "formik";
 import emailjs from "@emailjs/browser";
+import AuthContext from "../contexts/AuthContext";
 
 export default function ContactForm() {
   const formRef = useRef();
+  const { user } = useContext(AuthContext);
   const [sent, setSent] = useState(false);
+
+  const [initialValues, setInitialValues] = useState({
+    name: "",
+    username: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+  useEffect(() => {
+    if (user) {
+      const fullName = `${user.lastName || ""} ${user.firstName || ""} `.trim();
+      console.log(fullName);
+
+      setInitialValues((prev) => ({
+        ...prev,
+        name: fullName,
+        username: user.username || "",
+        email: user.email || "",
+      }));
+    }
+  }, [user]);
 
   const handleEmailSend = (values, { resetForm }) => {
     emailjs
       .sendForm(
-        "service_hariv19", // EmailJS service ID
-        "template_3tdu6xd", // EmailJS template ID
+        "service_hariv19",
+        "template_3tdu6xd",
         formRef.current,
-        "pv-N3kyXCwDqUX5J2" // EmailJS public key
+        "pv-N3kyXCwDqUX5J2"
       )
       .then(() => {
         setSent(true);
@@ -26,18 +50,13 @@ export default function ContactForm() {
   return (
     <section className="bg-white rounded-2xl shadow-lg p-8">
       <h2 className="text-2xl font-bold mb-6 text-center text-gray-900">
-        Küldj visszajelzést
+        Küldj nekünk üzenetet!
       </h2>
 
       <Formik
-        initialValues={{
-          name: "",
-          username: "",
-          email: "",
-          phone: "",
-          message: "",
-        }}
+        initialValues={initialValues}
         onSubmit={handleEmailSend}
+        enableReinitialize
       >
         <Form ref={formRef} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

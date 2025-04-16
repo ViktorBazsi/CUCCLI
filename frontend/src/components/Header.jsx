@@ -60,9 +60,9 @@ export default function Header() {
           <div className="text-2xl font-extrabold tracking-tight">
             {isLoggedIn ? (
               <>
-                <span className="block lg:hidden">{user.firstName}</span>
+                <span className="block lg:hidden">{user.username}</span>
                 <span className="hidden lg:block">
-                  Üdv nálunk, {user.firstName}!
+                  Üdv nálunk, {user.username}!
                 </span>
               </>
             ) : (
