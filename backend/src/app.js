@@ -10,6 +10,7 @@ import dateRoutes from "./routes/date.routes.js";
 import performanceRoutes from "./routes/performance.routes.js";
 import likeRoutes from "./routes/like.routes.js";
 import feedbackRoutes from "./routes/feedback.routes.js";
+import ratingRoutes from "./routes/rating.routes.js"
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use("/api/date", dateRoutes);
 app.use("/api/performance", performanceRoutes);
 app.use("/api/like", likeRoutes);
 app.use("/api/feedback", feedbackRoutes);
+app.use("/api/rating", ratingRoutes);
 
 app.use(errorHandler);
 
