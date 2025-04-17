@@ -8,6 +8,8 @@ const listArchived = async (filter = {}) => {
       actors: true,
       directors: true,
       likes: true,
+      feedbacks: true,
+      ratings: true,
     },
   });
   return allArchived;
