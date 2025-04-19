@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@babel/node": "^7.26.0",
+    "babel-core": "^7.0.0-bridge.0",
     "nodemon": "^3.1.9",
     "prisma": "^6.5.0"
   }
