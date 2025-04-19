@@ -2,7 +2,7 @@ import likeService from "../services/like.service.js";
 
 const toggleLike = async (req, res, next) => {
   try {
-    const userId = req.user?.id;
+    const userId = req.user && req.user.id;
     const { performanceId } = req.params;
 
     if (!userId) {

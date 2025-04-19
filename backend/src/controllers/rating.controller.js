@@ -1,7 +1,7 @@
 import ratingService from "../services/rating.service.js";
 
 const create = async (req, res, next) => {
-  const userId = req.user?.id;
+  const userId = req.user && req.user.id;
   const { performanceId } = req.params;
   const { value } = req.body;
 
