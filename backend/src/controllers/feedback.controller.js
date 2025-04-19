@@ -5,6 +5,8 @@ const create = async (req, res, next) => {
   const { performanceId } = req.params;
   const { message } = req.body;
 
+  // trigger render rebuild
+
   try {
     if (!userId) {
       return res.status(401).json({ message: "Bejelentkezés szükséges." });
