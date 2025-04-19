@@ -1,7 +1,7 @@
 import feedbackService from "../services/feedback.service.js";
 
 const create = async (req, res, next) => {
-  const userId = req.user?.id;
+  const userId = req.user && req.user.id;
   const { performanceId } = req.params;
   const { message } = req.body;
 
