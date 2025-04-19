@@ -1,13 +1,6 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-var _express = _interopRequireDefault(require("express"));
-var _dateController = _interopRequireDefault(require("../controllers/date.controller.js"));
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
-var router = _express["default"].Router();
-router.get("/", _dateController["default"].listAll);
-router.get("/:id", _dateController["default"].getById);
-var _default = exports["default"] = router;
+import express from "express";
+import dateController from "../controllers/date.controller.js";
+const router = express.Router();
+router.get("/", dateController.listAll);
+router.get("/:id", dateController.getById);
+export default router;
