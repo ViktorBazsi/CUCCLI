@@ -1,32 +1,32 @@
 import { JWT_SECRET } from "../constants/constants.js";
 import HttpError from "../utils/HttpError.js";
 import jwt from "jsonwebtoken";
-const authenticate = (req, res, next) => {
-  const token = req.headers.authorization && req.headers.authorization.split(" ")[1];
+var authenticate = function authenticate(req, res, next) {
+  var token = req.headers.authorization && req.headers.authorization.split(" ")[1];
   if (!token) return next(new HttpError("Token missing, jelentkezz be!", 401));
   try {
-    const userDecoded = jwt.verify(token, JWT_SECRET);
+    var userDecoded = jwt.verify(token, JWT_SECRET);
     req.user = userDecoded;
     next();
   } catch (error) {
     next(error);
   }
 };
-const isAdmin = (req, res, next) => {
+var isAdmin = function isAdmin(req, res, next) {
   if (req.user && req.user.role === "ADMIN") {
     next();
   } else {
     next(new HttpError("Admin role required", 403));
   }
 };
-const isTheaterAdmin = (req, res, next) => {
+var isTheaterAdmin = function isTheaterAdmin(req, res, next) {
   if (req.user && req.user.role === "THEATERADMIN") {
     next();
   } else {
     next(new HttpError("TheaterAdmin role required", 403));
   }
 };
-const isPerformer = (req, res, next) => {
+var isPerformer = function isPerformer(req, res, next) {
   if (req.user && req.user.role === "PERFORMER") {
     next();
   } else {
@@ -34,8 +34,8 @@ const isPerformer = (req, res, next) => {
   }
 };
 export default {
-  authenticate,
-  isAdmin,
-  isTheaterAdmin,
-  isPerformer
+  authenticate: authenticate,
+  isAdmin: isAdmin,
+  isTheaterAdmin: isTheaterAdmin,
+  isPerformer: isPerformer
 };

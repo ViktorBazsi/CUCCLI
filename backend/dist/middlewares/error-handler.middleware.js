@@ -1,5 +1,5 @@
 import HttpError from "../utils/HttpError.js";
-const errorHandler = (err, req, res, next) => {
+var errorHandler = function errorHandler(err, req, res, next) {
   if (err instanceof HttpError) res.status(err.status).json({
     error: err.message
   });

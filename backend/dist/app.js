@@ -10,7 +10,7 @@ import performanceRoutes from "./routes/performance.routes.js";
 import likeRoutes from "./routes/like.routes.js";
 import feedbackRoutes from "./routes/feedback.routes.js";
 import ratingRoutes from "./routes/rating.routes.js";
-const app = express();
+var app = express();
 app.use(cors({
   origin: FRONTEND_URL
 }));
@@ -24,7 +24,7 @@ app.use("/api/like", likeRoutes);
 app.use("/api/feedback", feedbackRoutes);
 app.use("/api/rating", ratingRoutes);
 app.use(errorHandler);
-app.use("/", (req, res) => {
+app.use("/", function (req, res) {
   res.status(404).send("No Endpoint");
 });
 export default app;

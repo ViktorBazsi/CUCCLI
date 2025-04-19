@@ -1,7 +1,7 @@
 import express from "express";
 import likeController from "../controllers/like.controller.js";
 import authMiddleware from "../middlewares/auth.middleware.js";
-const router = express.Router();
+var router = express.Router();
 
 // POST /api/like/:performanceId => like / dislike toggle
 router.post("/:performanceId", authMiddleware.authenticate, likeController.toggleLike);

@@ -1,11 +1,11 @@
 import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../constants/constants.js";
-const authOptional = (req, res, next) => {
-  const authHeader = req.headers.authorization;
+var authOptional = function authOptional(req, res, next) {
+  var authHeader = req.headers.authorization;
   if (authHeader && authHeader.startsWith("Bearer ")) {
-    const token = authHeader.split(" ")[1];
+    var token = authHeader.split(" ")[1];
     try {
-      const decoded = jwt.verify(token, JWT_SECRET);
+      var decoded = jwt.verify(token, JWT_SECRET);
       req.user = decoded;
     } catch (err) {
       // Hiba esetén ne dobjunk, csak menjünk tovább user nélkül
@@ -17,5 +17,5 @@ const authOptional = (req, res, next) => {
   next();
 };
 export default {
-  authOptional
+  authOptional: authOptional
 };
