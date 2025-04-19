@@ -3,7 +3,7 @@ import { JWT_SECRET } from "../constants/constants.js";
 
 const authOptional = (req, res, next) => {
   const authHeader = req.headers.authorization;
-  if (authHeader?.startsWith("Bearer ")) {
+  if (authHeader && authHeader.startsWith("Bearer ")) {
     const token = authHeader.split(" ")[1];
     try {
       const decoded = jwt.verify(token, JWT_SECRET);

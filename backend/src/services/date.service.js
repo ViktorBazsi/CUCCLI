@@ -3,7 +3,7 @@ import prisma from "../models/prisma-client.js";
 const listAll = async (filter) => {
   const where = {};
 
-  if (filter?.possible === "true") {
+  if (filter && filter.possible === "true") {
     const today = new Date();
     const cutoff = new Date(
       Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())

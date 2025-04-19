@@ -3,7 +3,9 @@ import HttpError from "../utils/HttpError.js";
 import jwt from "jsonwebtoken";
 
 const authenticate = (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1];
+  const token =
+    req.headers.authorization && req.headers.authorization.split(" ")[1];
+
   if (!token) return next(new HttpError("Token missing, jelentkezz be!", 401));
   try {
     const userDecoded = jwt.verify(token, JWT_SECRET);
