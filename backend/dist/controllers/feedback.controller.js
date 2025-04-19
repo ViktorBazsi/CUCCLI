@@ -19,7 +19,7 @@ var create = /*#__PURE__*/function () {
         case 0:
           userId = (_req$user = req.user) === null || _req$user === void 0 ? void 0 : _req$user.id;
           performanceId = req.params.performanceId;
-          message = req.body.message;
+          message = req.body.message; // trigger render rebuild
           _context.prev = 3;
           if (userId) {
             _context.next = 6;
