@@ -17,15 +17,20 @@ export default function NextPerformance() {
             Következő előadás: <span className="italic">„Cucli XXV”</span>
           </h2>
           <p className="text-gray-700 mb-6">
-            Egy egyedi, személyre szabott CUCLI előadás, ahol a néző történetei
-            kelnek életre. Ne maradj le! Sztárvendég:{" "}
-            <span className="italic">„Szikszai Rémusz”</span>
+            Hogy miről is van szó? A társulat éppen kapható írói/rendezői fogják
+            magukat és egész nap híreket olvasnak, hogy a megfelelőt
+            kiválasztva, egyetlen éjszaka alatt darabot írjanak belőle. Másnap
+            reggel 10-kor olvasópróba, aztán jön a fény-hang-jelmez-díszlet (már
+            ha van rá idő) és este 18:45-kor premier, először és utoljára. Nem
+            tud nem aktuális lenni. De nem vicces sem. Mindenesetre játékos,
+            mindenki számára. Sztárvendég:{" "}
+            <span className="italic">„ZSIGMOND EMŐKE”</span>
           </p>
           <p className="text-gray-500 text-sm mb-6">
-            2025. április 12. — Apertúra Bázis
+            2025. május 17. — Apertúra Bázis
           </p>
           <a
-            href="https://jegyek.apertura.hu/aranyak-es-fenyek" // csak minta link
+            href="https://apertura.jegyx1.hu/eloadas/3002/cucli"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-black text-white px-6 py-3 rounded-2xl text-base font-medium hover:bg-gray-800 transition"

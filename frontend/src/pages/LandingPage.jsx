@@ -14,8 +14,14 @@ export default function LandingPage() {
             Fedezd fel a személyre szabott színházat
           </h1>
           <p className="mt-6 text-lg text-gray-600">
-            A CUCLI új szintre emeli az előadásélményt. Mondd el, mire vágysz,
-            és mi megmutatjuk, mit nézz meg ma este!
+            Hölgyeink és Uraink! <br /> A már sokat megélt HírSzínházi Projekt látható
+            volt a Stúdió K Színházban, a MU Színházban és a Katona József
+            Színházban is, sőt, egyszer a minket befogadó Gólem Színházban sem
+            voltunk restek – ám ezúttal saját Bázisunkon, a Benkó Tibor Teremben
+            elevenednek majd meg az előző nap hírei, vagy legalábbis egy, hogy
+            megismételhetetlen módon beleégjen fülünkbe és szemünkbe (a
+            szívünkről nem is beszélve) ez a nagy magyar valóság, amelyben
+            élünk.
           </p>
           <div className="mt-8 flex justify-center gap-4">
             <button
