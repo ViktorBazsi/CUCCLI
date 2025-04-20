@@ -38,7 +38,7 @@ const getById = async (req, res, next) => {
     const performanceById = await performanceService.getById({
       where: { id },
     });
-    res.status(200).json = performanceById;
+    res.status(200).json(performanceById);
   } catch (error) {
     next(error);
   }
