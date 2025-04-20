@@ -15,6 +15,12 @@ const listArchived = async (filter = {}) => {
   return allArchived;
 };
 
+const getById = async (id) => {
+  const getById = await prisma.performance.findUnique(id);
+  return getById;
+};
+
 export default {
   listArchived,
+  getById,
 };

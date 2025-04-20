@@ -5,5 +5,6 @@ import authOptional from "../middlewares/authOptional.middleware.js";
 const router = express.Router();
 
 router.get("/", authOptional.authOptional, performanceController.listArchived);
+router.get("/:id", authOptional.authOptional, performanceController.getById);
 
 export default router;

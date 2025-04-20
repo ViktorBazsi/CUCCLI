@@ -32,6 +32,19 @@ const listArchived = async (req, res, next) => {
   }
 };
 
+const getById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const performanceById = await performanceService.getById({
+      where: { id },
+    });
+    res.status(200).json = performanceById;
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default {
   listArchived,
+  getById,
 };
