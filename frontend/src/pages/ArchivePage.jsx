@@ -21,18 +21,23 @@ export default function ArchivePage() {
 
   const [currentPage, setCurrentPage] = useState(1);
 
+  const fetchArchived = async () => {
+    try {
+      const data = await performanceService.list({ archived: true });
+      setAllPerformances(data);
+      console.log("Szervertől kapott archivált előadások:", data);
+
+      // Ha egy előadás van megnyitva, frissítsd azt is!
+      setSelectedPerformance((prev) =>
+        prev ? data.find((p) => p.id === prev.id) || prev : null
+      );
+    } catch (err) {
+      console.error("Nem sikerült betölteni az archív előadásokat:", err);
+    }
+  };
+
   // Backendről lekérés archivált előadásokra
   useEffect(() => {
-    const fetchArchived = async () => {
-      try {
-        const data = await performanceService.list({ archived: true });
-        setAllPerformances(data);
-        console.log("Szervertől kapott archivált előadások:", data);
-      } catch (err) {
-        console.error("Nem sikerült betölteni az archív előadásokat:", err);
-      }
-    };
-
     fetchArchived();
   }, []);
 
@@ -188,6 +193,7 @@ export default function ArchivePage() {
             onClose={() => setSelectedPerformance(null)}
             isLoggedIn={isLoggedIn} // 👉 EZ HIÁNYZOTT
             onToggleLike={handleLikeToggle}
+            onRefresh={fetchArchived} // 👈 ez kell!
           />
         )}
       </div>

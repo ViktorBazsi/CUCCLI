@@ -26,7 +26,20 @@ const listAll = async (req, res, next) => {
   }
 };
 
+const getById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const userById = await userService.getById({
+      where: { id },
+    });
+    res.status(200).json(userById);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default {
   create,
   listAll,
+  getById,
 };

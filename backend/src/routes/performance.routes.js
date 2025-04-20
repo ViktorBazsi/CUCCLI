@@ -6,5 +6,10 @@ const router = express.Router();
 
 router.get("/", authOptional.authOptional, performanceController.listArchived);
 router.get("/:id", authOptional.authOptional, performanceController.getById);
+router.get(
+  "/average/:id",
+  authOptional.authOptional,
+  performanceController.getPerformanceWithAverage
+);
 
 export default router;

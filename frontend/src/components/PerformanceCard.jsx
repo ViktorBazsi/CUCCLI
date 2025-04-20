@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 
+const renderStars = (count) =>
+  [...Array(5)].map((_, i) => <span key={i}>{i < count ? "⭐" : "☆"}</span>);
+
 export default function PerformanceCard({
   performance,
   onClick,
@@ -38,6 +41,21 @@ export default function PerformanceCard({
         <p className="text-sm text-gray-500">
           {performance.date || "nincs még dátum"}
         </p>
+
+        <div className="text-yellow-600 text-sm">
+          {renderStars(Math.round(performance.averageRating || 0))}
+          <span className="ml-2 text-gray-500">
+            ({performance.averageRating?.toFixed(1) || "0.0"})
+            {performance.ratingCount > 0 &&
+              ` – ${performance.ratingCount} értékelés`}
+          </span>
+        </div>
+
+        {performance.feedbacks?.length > 0 && (
+          <p className="text-sm italic text-gray-600 mt-1">
+            „{performance.feedbacks[0].message}”
+          </p>
+        )}
       </div>
 
       {isLoggedIn && (

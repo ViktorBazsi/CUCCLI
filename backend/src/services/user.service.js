@@ -43,7 +43,13 @@ const listAll = async () => {
   return allUsers;
 };
 
+const getById = async (id) => {
+  const userById = await prisma.user.findUnique(id);
+  return userById;
+};
+
 export default {
   create,
   listAll,
+  getById,
 };

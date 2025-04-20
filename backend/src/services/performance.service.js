@@ -8,7 +8,15 @@ const listArchived = async (filter = {}) => {
       actors: true,
       directors: true,
       likes: true,
-      feedbacks: true,
+      feedbacks: {
+        include: {
+          user: {
+            select: {
+              firstName: true,
+            },
+          },
+        },
+      },
       ratings: true,
     },
   });
@@ -23,7 +31,15 @@ const getById = async (id) => {
       actors: true,
       directors: true,
       likes: true,
-      feedbacks: true,
+      feedbacks: {
+        include: {
+          user: {
+            select: {
+              firstName: true,
+            },
+          },
+        },
+      },
       ratings: true,
     },
   });
