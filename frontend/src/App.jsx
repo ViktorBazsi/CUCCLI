@@ -13,6 +13,7 @@ import ArchivePage from "./pages/ArchivePage";
 import ContactPage from "./pages/ContactPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import LoginPage from "./pages/LoginPage";
+import AdminPage from "./pages/AdminPage";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/register" element={<RegistrationPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Routes>
         <Footer />
       </AuthProvider>
