@@ -48,8 +48,37 @@ const getById = async (id) => {
   return userById;
 };
 
+const update = async (id, data) => {
+  const updateData = { ...data };
+
+  if (updateData.password) {
+    updateData.password = await bcrypt.hash(updateData.password, 5);
+  }
+
+  return prisma.user.update({
+    where: { id },
+    data: updateData,
+  });
+};
+
+const updateRole = async (id, role) => {
+  return prisma.user.update({
+    where: { id },
+    data: { role },
+  });
+};
+
+const remove = async (id) => {
+  return prisma.user.delete({
+    where: { id },
+  });
+};
+
 export default {
   create,
   listAll,
   getById,
+  update,
+  updateRole,
+  remove,
 };
