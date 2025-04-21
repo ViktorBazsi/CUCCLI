@@ -24,8 +24,6 @@ export default function UserPerformances({ performances, onStatusChange }) {
               className="border rounded px-3 py-1 text-sm"
             >
               <option value="CREATED">Megrendelve</option>
-              <option value="PAID_PARTIAL">Előleg fizetve</option>
-              <option value="PAID_FULL">Teljesen kifizetve</option>
               <option value="IN_PREPARATION">Előkészítés</option>
               <option value="WRITING">Írás alatt</option>
               <option value="REHEARSAL">Próba</option>

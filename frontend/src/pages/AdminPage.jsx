@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 
 import UserTable from "../components/admin/UserTable";
 import PersonTable from "../components/admin/PersonTable";
+import AvailableDateTable from "../components/admin/AvailableDateTable";
+import PerformanceTable from "../components/admin/PerformanceTable";
 
 const tabs = [
   { id: "users", label: "Felhasználók" },
@@ -15,6 +17,8 @@ export default function AdminPage() {
   const [selectedTab, setSelectedTab] = useState("users");
   const [users, setUsers] = useState([]);
   const [persons, setPersons] = useState([]);
+  const [availableDates, setAvailableDates] = useState([]);
+  const [performances, setPerformances] = useState([]);
 
   useEffect(() => {
     if (selectedTab === "users") {
@@ -28,8 +32,22 @@ export default function AdminPage() {
           phoneNum: "06301234567",
           role: "USER",
           performances: [
-            { id: "p1", title: "Macbeth újratöltve", status: "WRITING" },
-            { id: "p2", title: "Az idő fogságában", status: "PAID_PARTIAL" },
+            {
+              id: "p1",
+              title: "Macbeth újratöltve",
+              status: "WRITING",
+              availableDate: {
+                date: "2025-05-01", // ⬅️ IDE KELL
+              },
+            },
+            {
+              id: "p2",
+              title: "Az idő fogságában",
+              status: "PAID_PARTIAL",
+              availableDate: {
+                date: "2025-05-12",
+              },
+            },
           ],
         },
         {
@@ -175,6 +193,107 @@ export default function AdminPage() {
     // TODO: DELETE /api/person/:id/availability/:availabilityId
   }
 
+  useEffect(() => {
+    if (selectedTab === "dates") {
+      // TODO: fetch from backend
+      setAvailableDates([
+        {
+          id: "d1",
+          date: "2025-05-01",
+          isActive: true,
+        },
+        {
+          id: "d2",
+          date: "2025-05-10",
+          isActive: false,
+        },
+      ]);
+    }
+  }, [selectedTab]);
+
+  function handleAddDate(newDate) {
+    const newId = `temp-${Date.now()}`;
+    setAvailableDates((prev) => [
+      ...prev,
+      { id: newId, date: newDate, isActive: true },
+    ]);
+    // TODO: POST /api/available-date
+  }
+
+  function handleToggleActive(dateId) {
+    setAvailableDates((prev) =>
+      prev.map((d) => (d.id === dateId ? { ...d, isActive: !d.isActive } : d))
+    );
+    // TODO: PATCH /api/available-date/:id/toggle
+  }
+
+  useEffect(() => {
+    if (selectedTab === "performances") {
+      // TODO: fetch from backend
+      setPerformances([
+        {
+          id: "pf1",
+          title: "Macbeth 2025",
+          quote: "Lesz itt vér, ne aggódj",
+          status: "WRITING",
+          createdAt: "2025-04-01",
+          availableDate: {
+            date: "2025-05-02",
+          },
+        },
+        {
+          id: "pf2",
+          title: "Az utolsó novella",
+          quote: "",
+          status: "IN_PREPARATION",
+          createdAt: "2025-04-10",
+          availableDate: {
+            date: "2025-05-14",
+          },
+        },
+      ]);
+    }
+  }, [selectedTab]);
+
+  function handlePerfStatusChange(performanceId, newStatus) {
+    setPerformances((prev) =>
+      prev.map((p) =>
+        p.id === performanceId ? { ...p, status: newStatus } : p
+      )
+    );
+    // TODO: PATCH /api/performances/:id/status
+  }
+
+  function handleUpdatePerformance(updated) {
+    setPerformances((prev) =>
+      prev.map((p) => (p.id === updated.id ? updated : p))
+    );
+    // TODO: PATCH /api/performances/:id
+  }
+
+  function handleCreatePerformance(newPerf) {
+    const newId = `temp-${Date.now()}`;
+    setPerformances((prev) => [...prev, { ...newPerf, id: newId }]);
+    // TODO: POST /api/performances
+  }
+
+  function handleDeletePerformance(performanceId) {
+    setPerformances((prev) => prev.filter((p) => p.id !== performanceId));
+    // TODO: DELETE /api/performances/:id
+  }
+
+  function handleEditPerformance(updated) {
+    setUsers((prevUsers) =>
+      prevUsers.map((user) => ({
+        ...user,
+        performances: user.performances.map((p) =>
+          p.id === updated.id ? { ...p, ...updated } : p
+        ),
+      }))
+    );
+    // TODO: PATCH /api/performances/:id
+  }
+
   return (
     <main className="pt-24 px-4 min-h-screen bg-gradient-to-b from-white to-gray-900 text-gray-800 flex">
       {/* Sidebar */}
@@ -221,7 +340,11 @@ export default function AdminPage() {
               users={users}
               onEditRole={handleRoleChange}
               onEditUser={handleEditUser}
-              onStatusChange={handleStatusChange} // ✅ EZ HIÁNYZOTT!
+              onStatusChange={handleStatusChange}
+              onEditPerformance={handleEditPerformance} // ⬅️ ezeket is add át
+              onCreatePerformance={handleCreatePerformance}
+              onDeletePerformance={handleDeletePerformance}
+              availableDates={availableDates} // ⬅️ ITT IS KELL
             />
           </div>
         )}
@@ -252,22 +375,47 @@ export default function AdminPage() {
           </div>
         )}
 
-        {selectedTab === "dates" && (
+        {/* {selectedTab === "dates" && (
           <div>
             <h2 className="text-2xl font-semibold mb-4">Előadás időpontok</h2>
             <p className="text-gray-600">
               👉 Itt lehet előadás időpontokat kezelni.
             </p>
           </div>
+        )} */}
+
+        {selectedTab === "dates" && (
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">Előadás időpontok</h2>
+            <AvailableDateTable
+              dates={availableDates}
+              onAddDate={handleAddDate}
+              onToggleActive={handleToggleActive}
+            />
+          </div>
         )}
 
-        {selectedTab === "performances" && (
+        {/* {selectedTab === "performances" && (
           <div>
             <h2 className="text-2xl font-semibold mb-4">Előadások kezelése</h2>
             <p className="text-gray-600">
               👉 Itt lehet performance-okat szerkeszteni, hozzáadni, státuszt
               módosítani.
             </p>
+          </div>
+        )} */}
+
+        {selectedTab === "performances" && (
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">Előadások kezelése</h2>
+            <PerformanceTable
+              performances={performances}
+              onStatusChange={handlePerfStatusChange}
+              onUpdatePerformance={handleUpdatePerformance}
+              onCreatePerformance={handleCreatePerformance}
+              onDeletePerformance={handleDeletePerformance}
+              availableDates={availableDates} // ⬅️ ITT ADD ÁT
+            />
           </div>
         )}
 

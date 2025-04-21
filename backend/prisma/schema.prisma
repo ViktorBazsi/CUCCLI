@@ -28,14 +28,18 @@ enum Role {
 
 enum OrderStatus {
   CREATED           // Megrendelve
-  PAID_PARTIAL      // Előleg fizetve
-  PAID_FULL         // Teljesen kifizetve
   IN_PREPARATION    // Előkészítés (kapcsolatfelvétel)
   WRITING           // Írás alatt
   REHEARSAL         // Próba
   PREMIERE          // Bemutató
   COMPLETED         // Teljesítve
   CANCELLED         // Lemondva
+}
+
+enum PaymentSatus {
+  NOT_PAID          // Nincs fizetve
+  PAID_PARTIAL      // Előleg fizetve
+  PAID_FULL         // Teljesen kifizetve
 }
 
 
@@ -104,6 +108,7 @@ model Performance {
   quote     String?
 
   status    OrderStatus @default(CREATED)
+  payment   PaymentSatus @default(NOT_PAID)
 
   userId    String?
   user      User?        @relation(fields: [userId], references: [id])

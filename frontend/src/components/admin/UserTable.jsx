@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import UserPerformances from "./UserPerformances";
+import UserPerformanceTable from "./UserPerformanceTable";
 import EditUserModal from "./EditUserModal";
 
 export default function UserTable({
@@ -10,6 +11,10 @@ export default function UserTable({
   onEditRole,
   onEditUser,
   onStatusChange,
+  onEditPerformance, // ⬅️ új prop
+  onCreatePerformance, // ⬅️ új prop
+  onDeletePerformance, // ⬅️ új prop
+  availableDates = [], // ⬅️ ADD THIS
 }) {
   const [editingUser, setEditingUser] = useState(null);
   const [expandedUserId, setExpandedUserId] = useState(null);
@@ -72,7 +77,7 @@ export default function UserTable({
       </table>
 
       {/* Expanded performance list */}
-      {expandedUserId && (
+      {/* {expandedUserId && (
         <div className="mt-6">
           <h3 className="text-lg font-semibold mb-2">Előadások</h3>
           <UserPerformances
@@ -80,6 +85,26 @@ export default function UserTable({
               users.find((u) => u.id === expandedUserId)?.performances || []
             }
             onStatusChange={onStatusChange}
+          />
+        </div>
+      )} */}
+
+      {expandedUserId && (
+        <div className="mt-6">
+          <h3 className="text-lg font-semibold mb-2">
+            Előadások – {users.find((u) => u.id === expandedUserId)?.firstName}{" "}
+            {users.find((u) => u.id === expandedUserId)?.lastName}
+          </h3>
+          <UserPerformanceTable
+            performances={
+              users.find((u) => u.id === expandedUserId)?.performances || []
+            }
+            onStatusChange={onStatusChange}
+            onUpdatePerformance={onEditPerformance} // ✅ ez most prop lesz
+            onCreatePerformance={onCreatePerformance} // ✅ ez is
+            onDeletePerformance={onDeletePerformance} // ✅ ez is
+            userId={expandedUserId}
+            availableDates={availableDates} // ⬅️ ITT ADD ÁT
           />
         </div>
       )}
