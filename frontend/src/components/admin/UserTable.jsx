@@ -1,6 +1,7 @@
 // components/admin/UserTable.jsx
 
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 import UserPerformances from "./UserPerformances";
 import UserPerformanceTable from "./UserPerformanceTable";
@@ -10,17 +11,38 @@ export default function UserTable({
   users,
   onEditRole,
   onEditUser,
+  onCreateUser, // ⬅️ új prop
   onStatusChange,
   onEditPerformance, // ⬅️ új prop
   onCreatePerformance, // ⬅️ új prop
   onDeletePerformance, // ⬅️ új prop
   availableDates = [], // ⬅️ ADD THIS
+  onDeleteUser, // ⬅️ új prop
 }) {
   const [editingUser, setEditingUser] = useState(null);
   const [expandedUserId, setExpandedUserId] = useState(null);
 
   return (
     <>
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={() =>
+            setEditingUser({
+              id: null,
+              username: "",
+              firstName: "",
+              lastName: "",
+              email: "",
+              phoneNum: "",
+              password: "",
+              role: "USER",
+            })
+          }
+          className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800"
+        >
+          + Új felhasználó
+        </button>
+      </div>
       <table className="min-w-full bg-white border border-gray-200 rounded-xl">
         <thead>
           <tr className="bg-gray-100 text-gray-800 text-left">
@@ -70,6 +92,48 @@ export default function UserTable({
                 >
                   Előadások
                 </button>
+                <button
+                  onClick={() => {
+                    toast.warning(
+                      ({ closeToast }) => (
+                        <div>
+                          <p className="font-medium mb-2">
+                            Biztosan törölni szeretnéd{" "}
+                            <span className="font-semibold">
+                              {user.firstName} {user.lastName}
+                            </span>{" "}
+                            felhasználót?
+                          </p>
+                          <div className="flex justify-end gap-2 mt-3">
+                            <button
+                              onClick={() => {
+                                onDeleteUser(user.id);
+                                closeToast();
+                              }}
+                              className="text-sm px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                            >
+                              Igen, törlöm
+                            </button>
+                            <button
+                              onClick={closeToast}
+                              className="text-sm px-3 py-1 border rounded hover:bg-gray-100"
+                            >
+                              Mégse
+                            </button>
+                          </div>
+                        </div>
+                      ),
+                      {
+                        autoClose: false,
+                        closeOnClick: false,
+                        closeButton: false,
+                      }
+                    );
+                  }}
+                  className="text-sm border px-3 py-1 rounded text-red-500 hover:bg-red-100"
+                >
+                  Törlés
+                </button>
               </td>
             </tr>
           ))}
@@ -113,7 +177,14 @@ export default function UserTable({
         <EditUserModal
           user={editingUser}
           onClose={() => setEditingUser(null)}
-          onSave={onEditUser} // 🟢 Itt hívjuk meg a szülőből kapott handleEditUser-t
+          onSave={(updatedUser) => {
+            if (updatedUser.id) {
+              onEditUser(updatedUser);
+            } else {
+              onCreateUser(updatedUser); // ⬅️ toast is itt fut
+            }
+            setEditingUser(null);
+          }}
         />
       )}
     </>

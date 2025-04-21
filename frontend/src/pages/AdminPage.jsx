@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 import UserTable from "../components/admin/UserTable";
 import PersonTable from "../components/admin/PersonTable";
 import AvailableDateTable from "../components/admin/AvailableDateTable";
 import PerformanceTable from "../components/admin/PerformanceTable";
 import PaymentTable from "../components/admin/PaymentTable";
+
+import userService from "../services/user.service";
 
 const tabs = [
   { id: "users", label: "Felhasználók" },
@@ -21,60 +24,92 @@ export default function AdminPage() {
   const [availableDates, setAvailableDates] = useState([]);
   const [performances, setPerformances] = useState([]);
 
+  // USER MOCK:
+  // useEffect(() => {
+  //   if (selectedTab === "users") {
+  //     setUsers([
+  //       {
+  //         id: "1",
+  //         firstName: "Elek",
+  //         lastName: "Ágnes",
+  //         username: "agnes123",
+  //         email: "agnes@example.com",
+  //         phoneNum: "06301234567",
+  //         role: "USER",
+  //         performances: [
+  //           {
+  //             id: "p1",
+  //             title: "Macbeth újratöltve",
+  //             status: "WRITING",
+  //             availableDate: {
+  //               date: "2025-05-01", // ⬅️ IDE KELL
+  //             },
+  //             payment: "PAID_PARTIAL",
+  //           },
+  //           {
+  //             id: "p2",
+  //             title: "Az idő fogságában",
+  //             status: "PAID_PARTIAL",
+  //             availableDate: {
+  //               date: "2025-05-12",
+  //             },
+  //             payment: "NOT_PAID",
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         id: "2",
+  //         firstName: "Kovács",
+  //         lastName: "Béla",
+  //         username: "bela99",
+  //         email: "bela@example.com",
+  //         phoneNum: null,
+  //         role: "THEATER_ADMIN",
+  //         performances: [],
+  //       },
+  //     ]);
+  //   }
+  // }, [selectedTab]);
+
   useEffect(() => {
     if (selectedTab === "users") {
-      setUsers([
-        {
-          id: "1",
-          firstName: "Elek",
-          lastName: "Ágnes",
-          username: "agnes123",
-          email: "agnes@example.com",
-          phoneNum: "06301234567",
-          role: "USER",
-          performances: [
-            {
-              id: "p1",
-              title: "Macbeth újratöltve",
-              status: "WRITING",
-              availableDate: {
-                date: "2025-05-01", // ⬅️ IDE KELL
-              },
-              payment: "PAID_PARTIAL",
-            },
-            {
-              id: "p2",
-              title: "Az idő fogságában",
-              status: "PAID_PARTIAL",
-              availableDate: {
-                date: "2025-05-12",
-              },
-              payment: "NOT_PAID",
-            },
-          ],
-        },
-        {
-          id: "2",
-          firstName: "Kovács",
-          lastName: "Béla",
-          username: "bela99",
-          email: "bela@example.com",
-          phoneNum: null,
-          role: "THEATER_ADMIN",
-          performances: [],
-        },
-      ]);
+      userService.listAll().then(setUsers).catch(console.error);
     }
   }, [selectedTab]);
 
-  function handleRoleChange(userId, newRole) {
-    setUsers((prev) =>
-      prev.map((user) =>
-        user.id === userId ? { ...user, role: newRole } : user
-      )
-    );
-    // TODO: Küldd el a backendnek a módosítást
-    // fetch(`/api/users/${userId}/role`, { method: 'PUT', body: JSON.stringify({ role: newRole }) })
+  async function handleCreateUser(newUser) {
+    try {
+      const created = await userService.create(newUser);
+      setUsers((prev) => [...prev, { ...created, performances: [] }]);
+      toast.success("Felhasználó sikeresen létrehozva! 🙌");
+    } catch (error) {
+      console.error("Hiba az új user létrehozásakor:", error.message);
+      toast.error("Hiba történt a felhasználó létrehozásakor. 😞");
+    }
+  }
+
+  // MOCK:
+  // function handleRoleChange(userId, newRole) {
+  //   setUsers((prev) =>
+  //     prev.map((user) =>
+  //       user.id === userId ? { ...user, role: newRole } : user
+  //     )
+  //   );
+  // TODO: Küldd el a backendnek a módosítást
+  // fetch(`/api/users/${userId}/role`, { method: 'PUT', body: JSON.stringify({ role: newRole }) })
+  // }
+
+  async function handleRoleChange(userId, newRole) {
+    try {
+      const updatedUser = await userService.updateRole(userId, newRole);
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user.id === userId ? { ...user, role: updatedUser.role } : user
+        )
+      );
+    } catch (error) {
+      console.error("Szerepkör módosítás hiba:", error);
+    }
   }
 
   function handleStatusChange(performanceId, newStatus) {
@@ -89,20 +124,41 @@ export default function AdminPage() {
     // TODO: PATCH /api/performances/:id/status
   }
 
-  function handleEditUser(updatedUser) {
-    setUsers((prevUsers) =>
-      prevUsers.map((user) =>
-        user.id === updatedUser.id ? { ...user, ...updatedUser } : user
-      )
-    );
+  // MOCK:
+  // function handleEditUser(updatedUser) {
+  //   setUsers((prevUsers) =>
+  //     prevUsers.map((user) =>
+  //       user.id === updatedUser.id ? { ...user, ...updatedUser } : user
+  //     )
+  //   );
 
-    // TODO: PATCH /api/users/:id a backend felé
-    // Például:
-    // fetch(`/api/users/${updatedUser.id}`, {
-    //   method: "PATCH",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(updatedUser),
-    // })
+  //   // TODO: PATCH /api/users/:id a backend felé
+  //   // Például:
+  //   // fetch(`/api/users/${updatedUser.id}`, {
+  //   //   method: "PATCH",
+  //   //   headers: { "Content-Type": "application/json" },
+  //   //   body: JSON.stringify(updatedUser),
+  //   // })
+  // }
+
+  async function handleEditUser(updatedUser) {
+    try {
+      const response = await userService.update(updatedUser.id, updatedUser);
+      setUsers((prevUsers) =>
+        prevUsers.map((user) => (user.id === updatedUser.id ? response : user))
+      );
+    } catch (error) {
+      console.error("Sikertelen user frissítés:", error);
+    }
+  }
+
+  async function handleDeleteUser(userId) {
+    try {
+      await userService.destroy(userId);
+      setUsers((prev) => prev.filter((u) => u.id !== userId));
+    } catch (err) {
+      console.error("Hiba a törlés során:", err);
+    }
   }
 
   useEffect(() => {
@@ -372,11 +428,13 @@ export default function AdminPage() {
               users={users}
               onEditRole={handleRoleChange}
               onEditUser={handleEditUser}
+              onCreateUser={handleCreateUser} // ⬅️ Itt átadod
               onStatusChange={handleStatusChange}
               onEditPerformance={handleEditPerformance} // ⬅️ ezeket is add át
               onCreatePerformance={handleCreatePerformance}
               onDeletePerformance={handleDeletePerformance}
               availableDates={availableDates} // ⬅️ ITT IS KELL
+              onDeleteUser={handleDeleteUser} // ⬅️ ezt add hozzá
             />
           </div>
         )}

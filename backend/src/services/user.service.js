@@ -39,7 +39,15 @@ const create = async ({
 };
 
 const listAll = async () => {
-  const allUsers = await prisma.user.findMany();
+  const allUsers = await prisma.user.findMany({
+    include: {
+      performances: true,
+      likes: true,
+      carts: true,
+      feedbacks: true,
+      ratings: true,
+    },
+  });
   return allUsers;
 };
 
