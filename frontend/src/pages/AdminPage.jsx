@@ -8,6 +8,7 @@ import PerformanceTable from "../components/admin/PerformanceTable";
 import PaymentTable from "../components/admin/PaymentTable";
 
 import userService from "../services/user.service";
+import personService from "../services/person.service";
 
 const tabs = [
   { id: "users", label: "Felhasználók" },
@@ -161,43 +162,80 @@ export default function AdminPage() {
     }
   }
 
+  // MOCK:
+  // useEffect(() => {
+  //   if (selectedTab === "performers") {
+  //     // TODO: fetch persons from backend
+  //     setPersons([
+  //       {
+  //         id: "p1",
+  //         name: "Szabó Júlia",
+  //         roles: ["ACTOR"],
+  //         availability: [
+  //           { id: "a1", date: "2025-04-24" },
+  //           { id: "a2", date: "2025-05-01" },
+  //         ],
+  //       },
+  //       {
+  //         id: "p2",
+  //         name: "Nagy Dániel",
+  //         roles: ["WRITER", "DIRECTOR"],
+  //         availability: [],
+  //       },
+  //     ]);
+  //   }
+  // }, [selectedTab]);
+
   useEffect(() => {
     if (selectedTab === "performers") {
-      // TODO: fetch persons from backend
-      setPersons([
-        {
-          id: "p1",
-          name: "Szabó Júlia",
-          roles: ["ACTOR"],
-          availability: [
-            { id: "a1", date: "2025-04-24" },
-            { id: "a2", date: "2025-05-01" },
-          ],
-        },
-        {
-          id: "p2",
-          name: "Nagy Dániel",
-          roles: ["WRITER", "DIRECTOR"],
-          availability: [],
-        },
-      ]);
+      personService
+        .listAll()
+        .then(setPersons)
+        .catch((err) => {
+          console.error("Hiba a person listázáskor:", err);
+          toast.error("Nem sikerült betölteni az alkotókat.");
+        });
     }
   }, [selectedTab]);
 
-  function handleRoleToggle(personId, role) {
-    setPersons((prev) =>
-      prev.map((p) =>
-        p.id === personId
-          ? {
-              ...p,
-              roles: p.roles.includes(role)
-                ? p.roles.filter((r) => r !== role)
-                : [...p.roles, role],
-            }
-          : p
-      )
-    );
-    // TODO: PATCH /api/person/:id/roles
+  // MOCK:
+  // function handleRoleToggle(personId, role) {
+  //   setPersons((prev) =>
+  //     prev.map((p) =>
+  //       p.id === personId
+  //         ? {
+  //             ...p,
+  //             roles: p.roles.includes(role)
+  //               ? p.roles.filter((r) => r !== role)
+  //               : [...p.roles, role],
+  //           }
+  //         : p
+  //     )
+  //   );
+  //   // TODO: PATCH /api/person/:id/roles
+  // }
+
+  async function handleRoleToggle(personId, role) {
+    const person = persons.find((p) => p.id === personId);
+    if (!person) return;
+
+    const updatedRoles = person.roles.includes(role)
+      ? person.roles.filter((r) => r !== role)
+      : [...person.roles, role];
+
+    try {
+      const updatedPerson = await personService.toggleRole(
+        personId,
+        updatedRoles
+      );
+      setPersons((prev) =>
+        prev.map((p) => (p.id === personId ? updatedPerson : p))
+      );
+      toast.success("Szerepkör módosítva! 🙌");
+    } catch (error) {
+      console.error("Szerepkör módosítási hiba:", error);
+      toast.error("Hiba történt a szerepkör módosításakor.");
+    }
   }
 
   function handleAddAvailability(personId, date) {
@@ -251,23 +289,56 @@ export default function AdminPage() {
     );
     // TODO: DELETE /api/person/:id/availability/:availabilityId
   }
+  // MOCK:
+  // function handleCreatePerson(newPerson) {
+  //   const newId = `temp-${Date.now()}`;
+  //   setPersons((prev) => [
+  //     ...prev,
+  //     { ...newPerson, id: newId, availability: [] },
+  //   ]);
+  //   // TODO: POST /api/persons
+  // }
 
-  function handleCreatePerson(newPerson) {
-    const newId = `temp-${Date.now()}`;
-    setPersons((prev) => [
-      ...prev,
-      { ...newPerson, id: newId, availability: [] },
-    ]);
-    // TODO: POST /api/persons
+  async function handleCreatePerson(personData) {
+    try {
+      const created = await personService.create(personData);
+      setPersons((prev) => [...prev, created]);
+      toast.success("Új alkotó sikeresen létrehozva! 👏");
+    } catch (err) {
+      console.error("Hiba az alkotó létrehozásakor:", err);
+      toast.error("Nem sikerült létrehozni az alkotót. 😕");
+    }
   }
 
-  function handleUpdatePerson(updatedPerson) {
-    setPersons((prev) =>
-      prev.map((p) =>
-        p.id === updatedPerson.id ? { ...p, ...updatedPerson } : p
-      )
-    );
-    // TODO: PATCH /api/persons/:id
+  // MOCK:
+  // function handleUpdatePerson(updatedPerson) {
+  //   setPersons((prev) =>
+  //     prev.map((p) =>
+  //       p.id === updatedPerson.id ? { ...p, ...updatedPerson } : p
+  //     )
+  //   );
+  //   // TODO: PATCH /api/persons/:id
+  // }
+
+  async function handleUpdatePerson(updatedPerson) {
+    try {
+      const updated = await personService.update(
+        updatedPerson.id,
+        updatedPerson
+      );
+      setPersons((prev) =>
+        prev.map((p) => (p.id === updated.id ? updated : p))
+      );
+      toast.success("Alkotó sikeresen frissítve! ✨");
+    } catch (err) {
+      console.error("Hiba a frissítés során:", err);
+      toast.error("Nem sikerült frissíteni az alkotót. 😢");
+    }
+  }
+
+  async function handleDeletePerson(id) {
+    await personService.destroy(id);
+    setPersons((prev) => prev.filter((p) => p.id !== id));
   }
 
   useEffect(() => {
@@ -463,6 +534,7 @@ export default function AdminPage() {
               onEditAvailability={handleEditAvailability}
               onUpdatePerson={handleUpdatePerson}
               onCreatePerson={handleCreatePerson}
+              onDeletePerson={handleDeletePerson}
             />
           </div>
         )}

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Formik, Form, Field } from "formik";
+import { toast } from "react-toastify";
+
 import EditPersonModal from "./EditPersonModal";
 
 export default function PersonTable({
@@ -10,6 +12,7 @@ export default function PersonTable({
   onEditAvailability,
   onUpdatePerson,
   onCreatePerson,
+  onDeletePerson,
 }) {
   const [expandedId, setExpandedId] = useState(null);
   const [dateFormVisibleId, setDateFormVisibleId] = useState(null);
@@ -92,6 +95,46 @@ export default function PersonTable({
                   onClick={() => setEditingPerson(person)}
                 >
                   Szerkesztés
+                </button>
+                <button
+                  onClick={() => {
+                    toast.warn(
+                      ({ closeToast }) => (
+                        <div>
+                          <p>
+                            Biztosan törlöd ezt{" "}
+                            <span className="font-semibold">{person.name}</span>{" "}
+                            alkotót?
+                          </p>
+                          <div className="mt-2 flex gap-2">
+                            <button
+                              onClick={() => {
+                                onDeletePerson(person.id)
+                                  .then(() => toast.success("Alkotó törölve"))
+                                  .catch(() =>
+                                    toast.error("Hiba az alkotó törlésekor")
+                                  );
+                                closeToast();
+                              }}
+                              className="bg-red-600 text-white px-3 py-1 rounded text-sm"
+                            >
+                              Igen
+                            </button>
+                            <button
+                              onClick={closeToast}
+                              className="border px-3 py-1 rounded text-sm"
+                            >
+                              Mégse
+                            </button>
+                          </div>
+                        </div>
+                      ),
+                      { autoClose: false }
+                    );
+                  }}
+                  className="text-sm px-3 py-1 border rounded text-red-600 hover:bg-red-100"
+                >
+                  ❌ Törlés
                 </button>
               </td>
             </tr>

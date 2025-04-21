@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
+import getFullImageUrl from "../utils/getFullImageUrl";
 
 export default function PersonModal({
   person,
@@ -50,7 +51,7 @@ export default function PersonModal({
 
             {/* Kép */}
             <img
-              src={person.imageUrl}
+              src={getFullImageUrl(person.imageUrl)}
               alt={person.name}
               className="w-full h-64 object-cover rounded-xl mb-6 shadow-md"
             />

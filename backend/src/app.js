@@ -1,5 +1,6 @@
 import express, { json } from "express";
 import cors from "cors";
+import path from "path"; // ⬅️ új
 import { FRONTEND_URL } from "./constants/constants.js";
 import errorHandler from "./middlewares/error-handler.middleware.js";
 
@@ -10,12 +11,15 @@ import dateRoutes from "./routes/date.routes.js";
 import performanceRoutes from "./routes/performance.routes.js";
 import likeRoutes from "./routes/like.routes.js";
 import feedbackRoutes from "./routes/feedback.routes.js";
-import ratingRoutes from "./routes/rating.routes.js"
+import ratingRoutes from "./routes/rating.routes.js";
 
 const app = express();
 
 app.use(cors({ origin: FRONTEND_URL }));
 app.use(express.json());
+
+// ⬇️ Ezt IDE tedd:
+app.use("/uploads", express.static(path.resolve("uploads")));
 
 app.use("/auth", authRoutes);
 

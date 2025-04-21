@@ -1,5 +1,6 @@
 import { Formik, Form, Field } from "formik";
-import { handleFileUpload } from "../../utils/uploadFile";
+
+import getFullImageUrl from "../../utils/getFullImageUrl";
 
 export default function EditPersonModal({ person, onClose, onSave }) {
   return (
@@ -14,6 +15,7 @@ export default function EditPersonModal({ person, onClose, onSave }) {
             name: person.name || "",
             bio: person.bio || "",
             imageUrl: person.imageUrl || "",
+            imageFile: null, // 👈 fontos!
             roles: person.roles || [],
           }}
           onSubmit={(values) => {
@@ -47,14 +49,20 @@ export default function EditPersonModal({ person, onClose, onSave }) {
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={(e) =>
-                    handleFileUpload(e, setFieldValue, "imageUrl")
-                  }
+                  onChange={(e) => {
+                    const file = e.currentTarget.files[0];
+                    if (file) {
+                      const previewUrl = URL.createObjectURL(file);
+                      setFieldValue("imageFile", file); // 👈 a tényleges fájl
+                      setFieldValue("imageUrl", previewUrl); // 👈 előnézet
+                    }
+                  }}
                   className="text-sm"
                 />
+
                 {values.imageUrl && (
                   <img
-                    src={values.imageUrl}
+                    src={getFullImageUrl(values.imageUrl)}
                     alt="Előnézet"
                     className="w-24 h-24 rounded object-cover shadow"
                   />
