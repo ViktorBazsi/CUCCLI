@@ -1,19 +1,41 @@
 import { useState } from "react";
 import { Formik, Form, Field } from "formik";
+import EditPersonModal from "./EditPersonModal";
 
 export default function PersonTable({
   persons,
   onUpdateRoles,
   onAddAvailability,
   onRemoveAvailability,
-  onEditAvailability, // ⬅️ Új prop: meglévő availability módosítása
+  onEditAvailability,
+  onUpdatePerson,
+  onCreatePerson,
 }) {
   const [expandedId, setExpandedId] = useState(null);
   const [dateFormVisibleId, setDateFormVisibleId] = useState(null);
-  const [editingAvailability, setEditingAvailability] = useState(null); // ⬅️ Ez tárolja az aktuálisan szerkesztett availability-t
+  const [editingAvailability, setEditingAvailability] = useState(null);
+  const [editingPerson, setEditingPerson] = useState(null); // 🆕 Új állapot
 
   return (
     <div className="overflow-x-auto">
+      {/* Új alkotó gomb */}
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={() =>
+            setEditingPerson({
+              id: null,
+              name: "",
+              bio: "",
+              imageUrl: "",
+              roles: [],
+            })
+          }
+          className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800"
+        >
+          + Új alkotó
+        </button>
+      </div>
+
       <table className="min-w-full bg-white border border-gray-200 rounded-xl">
         <thead>
           <tr className="bg-gray-100 text-left text-gray-800">
@@ -65,28 +87,34 @@ export default function PersonTable({
                 >
                   + Ráérés
                 </button>
+                <button
+                  className="text-sm border px-3 py-1 rounded hover:bg-gray-100"
+                  onClick={() => setEditingPerson(person)}
+                >
+                  Szerkesztés
+                </button>
               </td>
             </tr>
           ))}
 
-          {/* Ráérések listája bővítve szerkesztés gombbal */}
+          {/* Ráérések listázása */}
           {persons.map((person) =>
             expandedId === person.id ? (
               <tr key={person.id + "_expanded"}>
                 <td colSpan={3} className="p-4 bg-gray-50 rounded-b-xl">
                   <div className="text-sm font-medium mb-2">
-                    {person.name} Ráérései:
+                    {person.name} ráérései:
                   </div>
                   {person.availability.length === 0 ? (
                     <p className="text-gray-500">Nincs megadva ráérés.</p>
                   ) : (
-                    <ul className="list-inside">
-                      {person.availability.map((a, index) => (
+                    <ul className="list-inside space-y-2">
+                      {person.availability.map((a, i) => (
                         <li
                           key={a.id}
-                          className={`flex items-center justify-between gap-4 px-3 py-2 rounded ${
-                            index % 2 === 0 ? "bg-white" : "bg-gray-100"
-                          }`}
+                          className={`flex items-center justify-between gap-4 ${
+                            i % 2 === 0 ? "bg-white" : "bg-gray-100"
+                          } p-2 rounded`}
                         >
                           {editingAvailability?.id === a.id ? (
                             <Formik
@@ -153,7 +181,7 @@ export default function PersonTable({
             ) : null
           )}
 
-          {/* Új ráérés hozzáadása Formik-kal */}
+          {/* Új ráérés űrlap */}
           {persons.map((person) =>
             dateFormVisibleId === person.id ? (
               <tr key={person.id + "_form"}>
@@ -193,6 +221,22 @@ export default function PersonTable({
           )}
         </tbody>
       </table>
+
+      {/* Szerkesztő modal megjelenítése */}
+      {editingPerson && (
+        <EditPersonModal
+          person={editingPerson}
+          onClose={() => setEditingPerson(null)}
+          onSave={(updatedPerson) => {
+            if (updatedPerson.id) {
+              onUpdatePerson(updatedPerson);
+            } else {
+              onCreatePerson(updatedPerson);
+            }
+            setEditingPerson(null);
+          }}
+        />
+      )}
     </div>
   );
 }

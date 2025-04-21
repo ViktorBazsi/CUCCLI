@@ -4,6 +4,7 @@ import UserTable from "../components/admin/UserTable";
 import PersonTable from "../components/admin/PersonTable";
 import AvailableDateTable from "../components/admin/AvailableDateTable";
 import PerformanceTable from "../components/admin/PerformanceTable";
+import PaymentTable from "../components/admin/PaymentTable";
 
 const tabs = [
   { id: "users", label: "Felhasználók" },
@@ -39,6 +40,7 @@ export default function AdminPage() {
               availableDate: {
                 date: "2025-05-01", // ⬅️ IDE KELL
               },
+              payment: "PAID_PARTIAL",
             },
             {
               id: "p2",
@@ -47,6 +49,7 @@ export default function AdminPage() {
               availableDate: {
                 date: "2025-05-12",
               },
+              payment: "NOT_PAID",
             },
           ],
         },
@@ -193,6 +196,24 @@ export default function AdminPage() {
     // TODO: DELETE /api/person/:id/availability/:availabilityId
   }
 
+  function handleCreatePerson(newPerson) {
+    const newId = `temp-${Date.now()}`;
+    setPersons((prev) => [
+      ...prev,
+      { ...newPerson, id: newId, availability: [] },
+    ]);
+    // TODO: POST /api/persons
+  }
+
+  function handleUpdatePerson(updatedPerson) {
+    setPersons((prev) =>
+      prev.map((p) =>
+        p.id === updatedPerson.id ? { ...p, ...updatedPerson } : p
+      )
+    );
+    // TODO: PATCH /api/persons/:id
+  }
+
   useEffect(() => {
     if (selectedTab === "dates") {
       // TODO: fetch from backend
@@ -228,7 +249,7 @@ export default function AdminPage() {
   }
 
   useEffect(() => {
-    if (selectedTab === "performances") {
+    if (selectedTab === "performances" || selectedTab === "payments") {
       // TODO: fetch from backend
       setPerformances([
         {
@@ -292,6 +313,17 @@ export default function AdminPage() {
       }))
     );
     // TODO: PATCH /api/performances/:id
+  }
+
+  // PAYMENT:
+  function handlePaymentChange(performanceId, newStatus) {
+    setPerformances((prev) =>
+      prev.map((p) =>
+        p.id === performanceId ? { ...p, payment: newStatus } : p
+      )
+    );
+
+    // TODO: PATCH /api/performances/:id/payment
   }
 
   return (
@@ -371,6 +403,8 @@ export default function AdminPage() {
               onAddAvailability={handleAddAvailability}
               onRemoveAvailability={handleRemoveAvailability}
               onEditAvailability={handleEditAvailability}
+              onUpdatePerson={handleUpdatePerson}
+              onCreatePerson={handleCreatePerson}
             />
           </div>
         )}
@@ -418,7 +452,7 @@ export default function AdminPage() {
             />
           </div>
         )}
-
+        {/* 
         {selectedTab === "payments" && (
           <div>
             <h2 className="text-2xl font-semibold mb-4">
@@ -427,6 +461,18 @@ export default function AdminPage() {
             <p className="text-gray-600">
               👉 Itt ellenőrizheted az előadások fizetési állapotát.
             </p>
+          </div>
+        )} */}
+
+        {selectedTab === "payments" && (
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              Fizetések ellenőrzése
+            </h2>
+            <PaymentTable
+              performances={performances}
+              onPaymentChange={handlePaymentChange}
+            />
           </div>
         )}
       </section>

@@ -40,7 +40,7 @@ export default function PerformanceTable({
               <th className="p-3">Cím</th>
               <th className="p-3">Státusz</th>
               <th className="p-3">Archivált</th>
-              <th className="p-3">Létrehozva</th>
+              <th className="p-3">Bemutató</th>
               <th className="p-3">Műveletek</th>
             </tr>
           </thead>
